@@ -1,5 +1,5 @@
 #################################################################
-#      v1.0:
+#     v1.01: update try/except for some attributes
 #      todo: clean up code
 #   working: gets 16 features about a tweet and saves it to csv
 #################################################################
@@ -31,10 +31,7 @@ class MyListener(StreamListener):
             tweets.append(data._json)
             tweet = data._json
             created_at = tweet['created_at']
-            try:
-                hash_tags = tweet['entities']['hashtags']
-            except:
-                hash_tags = ''
+            hash_tags = tweet['entities']['hashtags']
             try:
                 coordinates = tweet['geo']['coordinates']
             except:
@@ -56,14 +53,8 @@ class MyListener(StreamListener):
             user_created = tweet['user']['created_at']
             default_profile_image = tweet['user']['default_profile_image']
             user_likes = tweet['user']['favourites_count']
-            try:
-                user_followers = tweet['user']['followers_count']
-            except:
-                user_followers = ''
-            try:
-                user_following = tweet['user']['friends_count']
-            except:
-                user_following = ''
+            user_followers = tweet['user']['followers_count']
+            user_following = tweet['user']['friends_count']
             user_screen_name = tweet['user']['screen_name']
             user_num_tweets = tweet['user']['statuses_count']
             try:
