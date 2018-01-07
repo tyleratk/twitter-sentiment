@@ -1,5 +1,6 @@
 #################################################################
 #     v1.01: update try/except for some attributes
+#            adds extended_tweet
 #      todo: clean up code
 #   working: gets 16 features about a tweet and saves it to csv
 #################################################################
@@ -28,7 +29,6 @@ class MyListener(StreamListener):
     def on_status(self, data):
         # geo, lang, place, text, user
         if data.lang == 'en':#and data.geo != '':
-            tweets.append(data._json)
             tweet = data._json
             created_at = tweet['created_at']
             hash_tags = tweet['entities']['hashtags']
@@ -49,7 +49,10 @@ class MyListener(StreamListener):
                 tweet_location = tweet['place']['full_name']
             except:
                 tweet_location = ''
-            text = tweet['text']
+            try:
+                text = tweet['extended_tweet']['full_text']
+            except:
+                text = tweet['text']
             user_created = tweet['user']['created_at']
             default_profile_image = tweet['user']['default_profile_image']
             user_likes = tweet['user']['favourites_count']
@@ -61,9 +64,7 @@ class MyListener(StreamListener):
                 user_location = tweet['user']['location']
             except:
                 user_location = ''
-                
-            
-            # 
+
             tweet_data = [created_at, hash_tags, coordinates,
                           coordinates_type, lang, country, tweet_location, text,
                           user_created, default_profile_image, user_likes, 
@@ -74,13 +75,13 @@ class MyListener(StreamListener):
                 writer = csv.writer(f)
                 writer.writerow(tweet_data)
             
+            
     def on_error(self, status):
         print(status)
         return True
 
 
 twitter_stream = Stream(auth, MyListener())
-tweets = []
 # twitter_stream.sample(async=True)
 twitter_stream.filter(locations=[-125,25,-65,48], async=True)
 
