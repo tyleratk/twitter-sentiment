@@ -1,6 +1,9 @@
 #################################################################
+#     v1.02: corrects hashtags      
+#            --------------
 #     v1.01: update try/except for some attributes
 #            adds extended_tweet
+#            ---------------
 #      todo: clean up code
 #   working: gets 16 features about a tweet and saves it to csv
 #################################################################
@@ -10,6 +13,7 @@ from tweepy import Stream
 from tweepy.streaming import StreamListener
 import csv
 import time
+import numpy as np
 
 
 # ------------- set auth and initialize api -------------------------------
@@ -32,6 +36,13 @@ class MyListener(StreamListener):
             tweet = data._json
             created_at = tweet['created_at']
             hash_tags = tweet['entities']['hashtags']
+            if hash_tags == []:
+                hash_tags = None
+            else:
+                tags = []
+                for tag in hash_tags:
+                    tags.append(tag['text'])
+                hash_tags = tags
             try:
                 coordinates = tweet['geo']['coordinates']
             except:
@@ -80,12 +91,11 @@ class MyListener(StreamListener):
         print(status)
         return True
 
-
 twitter_stream = Stream(auth, MyListener())
 # twitter_stream.sample(async=True)
 twitter_stream.filter(locations=[-125,25,-65,48], async=True)
 
-time.sleep(60)
+time.sleep(5)
 twitter_stream.disconnect()
 
 
