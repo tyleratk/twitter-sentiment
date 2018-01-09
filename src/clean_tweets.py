@@ -1,16 +1,22 @@
+<<<<<<< HEAD
 #################################################################
 #     v1.0:
 #     todo:
 #  working: clean tweet/hashtag 
 #################################################################
 
+=======
+>>>>>>> master
 # open csv
 # grab only the rows i am interested in
 # remove links and usernames from tweet
 #     make sure emoji's stay
 # train model on emoji's
 # classify tweets as happy or sad
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 import pandas as pd
 import re
 
@@ -23,6 +29,7 @@ def clean_tweet(tweet):
     (#\w+)               => removes hashtags
     (\w+:\/\/\S+)        => removes links
     '''
+<<<<<<< HEAD
     return re.sub('(@\w+)|(#\w+)|(\w+:\/\/\S+)|(\n+)', '', tweet)
     
 
@@ -35,10 +42,14 @@ def get_hashtags(row):
     
     hashtags = re.sub('[\W\d]', ' ', row).split()
     return ' '.join(word for word in hashtags if word not in['text', 'indices'])
+=======
+    return re.sub('(@\w+)|(#\w+)|(\w+:\/\/\S+)|(\n+)', '', tweet)    
+>>>>>>> master
     
 
 if __name__ == '__main__':
     
+<<<<<<< HEAD
     # names = ['created_at', 'hash_tags', 'coordinates',
     #          'coordinates_type', 'lang', 'country', 'tweet_location', 'text',
     #          'user_created', 'default_profile_image', 'user_likes',
@@ -48,6 +59,17 @@ if __name__ == '__main__':
     # df = pd.read_csv('../data/tweets.csv', names=names)
     # 
     # tweets = df['text']
+=======
+    names = ['created_at', 'hash_tags', 'coordinates',
+             'coordinates_type', 'lang', 'country', 'tweet_location', 'text',
+             'user_created', 'default_profile_image', 'user_likes',
+             'user_followers', 'user_following', 'user_screen_name',
+             'user_num_tweets', 'user_location']
+
+    df = pd.read_csv('../data/tweets.csv', names=names)
+
+    tweets = df['text']
+>>>>>>> master
 
 
 
