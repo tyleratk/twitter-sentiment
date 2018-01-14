@@ -82,7 +82,7 @@ class MyListener(StreamListener):
                           user_followers, user_following, user_screen_name, 
                           user_num_tweets, user_location]
             
-            with open('tweets.csv', 'a') as f:
+            with open('../data/tweets.csv', 'a') as f:
                 writer = csv.writer(f)
                 writer.writerow(tweet_data)
             
@@ -95,7 +95,7 @@ twitter_stream = Stream(auth, MyListener())
 # twitter_stream.sample(async=True)
 twitter_stream.filter(locations=[-125,25,-65,48], async=True)
 
-time.sleep(5)
+time.sleep(7200)
 twitter_stream.disconnect()
 
 
