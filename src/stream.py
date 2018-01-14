@@ -1,4 +1,6 @@
 #################################################################
+#     v1.03: adds adding it to mongodb
+#            --------------
 #     v1.02: corrects hashtags      
 #            --------------
 #     v1.01: update try/except for some attributes
@@ -14,6 +16,8 @@ from tweepy.streaming import StreamListener
 import csv
 import time
 import numpy as np
+import pymongo
+import clean_tweets
 
 
 # ------------- set auth and initialize api -------------------------------
@@ -29,11 +33,11 @@ api = tweepy.API(auth) # API object while passing in auth information
 
 # --------------- stream data ---------------------------------
 class MyListener(StreamListener):
-
+    
     def on_status(self, data):
-        # geo, lang, place, text, user
-        if data.lang == 'en':#and data.geo != '':
+        if data.lang == 'en':
             tweet = data._json
+            # tweets.append(tweet)
             created_at = tweet['created_at']
             hash_tags = tweet['entities']['hashtags']
             if hash_tags == []:
@@ -81,22 +85,39 @@ class MyListener(StreamListener):
                           user_created, default_profile_image, user_likes, 
                           user_followers, user_following, user_screen_name, 
                           user_num_tweets, user_location]
-            
-            with open('../data/tweets.csv', 'a') as f:
-                writer = csv.writer(f)
-                writer.writerow(tweet_data)
-            
-            
+                          
+            names = ['created_at', 'hash_tags', 'coordinates',
+                     'coordinates_type', 'lang', 'country', 'tweet_location', 'text',
+                     'user_created', 'default_profile_image', 'user_likes',
+                     'user_followers', 'user_following', 'user_screen_name',
+                     'user_num_tweets', 'user_location']
+                          
+            if csv:
+                with open('../data/tweets.csv', 'a') as f:
+                    writer = csv.writer(f)
+                    writer.writerow(tweet_data)
+            else:
+                tweet_json = dict(zip(names, tweet_data))
+                tweet_json['text'] = clean_tweets.clean_text(tweet_json['text'])
+                client = pymongo.MongoClient()
+                db = client['tweet_data']
+                table = db['tweets']
+                table.insert_one(tweet_json)
+                        
     def on_error(self, status):
         print(status)
         return True
 
-twitter_stream = Stream(auth, MyListener())
-# twitter_stream.sample(async=True)
-twitter_stream.filter(locations=[-125,25,-65,48], async=True)
 
-time.sleep(7200)
-twitter_stream.disconnect()
+
+if __name__ == '__main__':
+    csv=False
+    twitter_stream = Stream(auth, MyListener())
+    # twitter_stream.sample(async=True)
+    twitter_stream.filter(locations=[-125,25,-65,48], async=True)
+
+    time.sleep(2)
+    twitter_stream.disconnect()
 
 
 
