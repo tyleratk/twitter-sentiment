@@ -22,9 +22,10 @@ if __name__ == '__main__':
     client = pymongo.MongoClient()
     db = client['tweet_data']
     table = db['tweets']
+    table.drop()
     
     data = get_data(filepath)
 
     print('Getting ready to iterate...')
     for i in range(data.shape[0]):
-        table.update(json.loads(row.to_json()), upsert=True)
+        table.insert_one(json.loads(data.iloc[i].to_json()))
