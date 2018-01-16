@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #################################################################
 #     v1.0:
 #     todo: fix clean_hashtags
@@ -5,12 +6,24 @@
 # getting score of 97, but always predicts 0 => TRAIN ON SAME SIZED SAMPLES
 #################################################################
 
+=======
+<<<<<<< HEAD
+#################################################################
+#     v1.0:
+#     todo:
+#  working: clean tweet/hashtag 
+#################################################################
+
+=======
+>>>>>>> master
+>>>>>>> df3963c6953c754fba9c03a23fb66f46690f8b7d
 # open csv
 # grab only the rows i am interested in
 # remove links and usernames from tweet
 #     make sure emoji's stay
 # train model on emoji's
 # classify tweets as happy or sad
+<<<<<<< HEAD
 
 import pandas as pd
 import re
@@ -38,12 +51,25 @@ class TwitterClassifier():
         
 
 def clean_text(tweet):
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> master
+import pandas as pd
+import re
+
+
+
+def clean_tweet(tweet):
+>>>>>>> df3963c6953c754fba9c03a23fb66f46690f8b7d
     '''
     remove links usernames and newlines from tweet
     (@\w+)               => removes usernames
     (#\w+)               => removes hashtags
     (\w+:\/\/\S+)        => removes links
     '''
+<<<<<<< HEAD
 
     return re.sub('(@\w+)|(#\w+)|(\w+:\/\/\S+)|(\n+)', '', tweet)
 
@@ -95,18 +121,41 @@ def get_x_y():
     y = comb.sentiment.values
     
     return X, y
+=======
+<<<<<<< HEAD
+    return re.sub('(@\w+)|(#\w+)|(\w+:\/\/\S+)|(\n+)', '', tweet)
+    
+
+def get_hashtags(row):
+    '''
+    strips everything but hashtags
+    '''
+    if row == []:
+        return None
+    
+    hashtags = re.sub('[\W\d]', ' ', row).split()
+    return ' '.join(word for word in hashtags if word not in['text', 'indices'])
+=======
+    return re.sub('(@\w+)|(#\w+)|(\w+:\/\/\S+)|(\n+)', '', tweet)    
+>>>>>>> master
+>>>>>>> df3963c6953c754fba9c03a23fb66f46690f8b7d
     
 
 if __name__ == '__main__':
     
+<<<<<<< HEAD
     # model = TwitterClassifier('multinomial')
 
+=======
+<<<<<<< HEAD
+>>>>>>> df3963c6953c754fba9c03a23fb66f46690f8b7d
     # names = ['created_at', 'hash_tags', 'coordinates',
     #          'coordinates_type', 'lang', 'country', 'tweet_location', 'text',
     #          'user_created', 'default_profile_image', 'user_likes',
     #          'user_followers', 'user_following', 'user_screen_name',
     #          'user_num_tweets', 'user_location']
     # 
+<<<<<<< HEAD
     # print('Loading data...')
     # df = pd.read_csv('../data/tweets.csv', names=names)
     # 
@@ -161,6 +210,24 @@ if __name__ == '__main__':
     
     
     
+=======
+    # df = pd.read_csv('../data/tweets.csv', names=names)
+    # 
+    # tweets = df['text']
+=======
+    names = ['created_at', 'hash_tags', 'coordinates',
+             'coordinates_type', 'lang', 'country', 'tweet_location', 'text',
+             'user_created', 'default_profile_image', 'user_likes',
+             'user_followers', 'user_following', 'user_screen_name',
+             'user_num_tweets', 'user_location']
+
+    df = pd.read_csv('../data/tweets.csv', names=names)
+
+    tweets = df['text']
+>>>>>>> master
+
+
+>>>>>>> df3963c6953c754fba9c03a23fb66f46690f8b7d
 
 
 
