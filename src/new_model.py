@@ -14,7 +14,7 @@ from sklearn.svm import LinearSVC, SVR
 import string
 punctuations = string.punctuation
 from spacy.en import English
-parser = English()
+# parser = English()
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.stop_words import ENGLISH_STOP_WORDS as stopwords 
@@ -32,10 +32,10 @@ class TwitterClassifier():
         self.pipeline = self.get_pipeline(classifier)
         
         
-    def get_pipeline(self, classifier):#, tokenizer='spacy_tokenizer'):
+    def get_pipeline(self, classifier):
         print('Creating model...')
         if classifier == 'linear_svc':
-            vectorizer = CountVectorizer()#tokenizer=tokenizer)#, ngram_range=(1,1))
+            vectorizer = CountVectorizer()
             model = LinearSVC()
         if classifier == 'linear_svc_tfidf':
             vectorizer = TfidfVectorizer()
@@ -43,8 +43,7 @@ class TwitterClassifier():
         if classifier == 'rbf':
             vectorizer = CountVectorizer()
             model = SVR()
-        
-
+            
         return make_pipeline(vectorizer, model)
         
         
@@ -145,9 +144,9 @@ class TwitterClassifier():
             df = df[['text', 'sentiment']]
             df['text'] = df['text'].apply(self.remove_emoji)
             tweets, labels = self.get_balanced_classes(df)
-            with open('../data/mongo_pkl.pkl', 'wb') as outfile:
-                pickle.dump([tweets, labels], outfile)
-                print('Wrote mongo_pkl')
+            # with open('../data/mongo_pkl.pkl', 'wb') as outfile:
+            #     pickle.dump([tweets, labels], outfile)
+            #     print('Wrote mongo_pkl')
             
         if source == 'nltk':
             print('Loading data...')
@@ -158,18 +157,17 @@ class TwitterClassifier():
             print('Cleaning tweets...')
             df['text'] = df['text'].apply(self.clean_text)
             print('Getting sentiment...')
-            df['text'] = df['text'].apply(self.remove_emoji)
+            # df['text'] = df['text'].apply(self.remove_emoji)
             sid = SentimentIntensityAnalyzer()
             df['sentiment'] = df.text.apply(lambda x: sid.polarity_scores(x)['compound'])   
             df = df[['text', 'sentiment']]
-            df.loc[df.sentiment >  0,'sentiment_type'] = 'pos'
-            df.loc[df.sentiment == 0,'sentiment_type'] = 'neu'
-            df.loc[df.sentiment <  0,'sentiment_type'] = 'neg'
-            
-            # gb = df.groupby('sentiment_type')
-            sns.violinplot(df.sentiment_type)
+            df.loc[df.sentiment >  0.5,'sentiment_type'] = 'pos'
+            mask = (df.sentiment >= -0.5) & (df.sentiment <= 0.5)
+            df.loc[mask, 'sentiment_type'] = 'neu'
+            df.loc[df.sentiment <  -0.5,'sentiment_type'] = 'neg'
+            # tweets, labels = self.get_balanced_classes(df)
+            tweets, labels = df.text.values, df.sentiment_type.values
 
-            tweets, labels = self.get_balanced_classes(df)
             with open('../data/nltk_pkl.pkl', 'wb') as outfile:
                 pickle.dump([tweets, labels], outfile)
                 print('Wrote nltk_pkl')
@@ -194,16 +192,16 @@ class TwitterClassifier():
         self.source = source
         
         tweets, labels = self.load_data(source)
-        # X_train, X_test, y_train, y_test = train_test_split(tweets, labels)
-        # self.pipeline.fit(X_train, y_train)
-        # print('Score: {:.2f}'.format(self.pipeline.score(X_test, y_test)))
+        X_train, X_test, y_train, y_test = train_test_split(tweets, labels)
+        self.pipeline.fit(X_train, y_train)
+        print('Score: {:.2f}'.format(self.pipeline.score(X_test, y_test)))
         
-        self.pipeline.fit(tweets, labels)
+        # self.pipeline.fit(tweets, labels)
         
         
     def predict(self, tweet):
         '''
-        return -1 0 1 based off sentiment of tweet
+        return sentiment of tweet
         '''
         return self.pipeline.predict(tweet)
     
