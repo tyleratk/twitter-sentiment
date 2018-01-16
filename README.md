@@ -13,4 +13,3 @@ Using machine learning and NLP to determine whether someone is happy or not, bas
     - For location
   
 ## Motivation
-    

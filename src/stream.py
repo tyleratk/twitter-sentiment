@@ -1,6 +1,9 @@
 #################################################################
+<<<<<<< HEAD
 #     v1.03: adds adding it to mongodb
 #            --------------
+=======
+>>>>>>> df3963c6953c754fba9c03a23fb66f46690f8b7d
 #     v1.02: corrects hashtags      
 #            --------------
 #     v1.01: update try/except for some attributes
@@ -16,8 +19,11 @@ from tweepy.streaming import StreamListener
 import csv
 import time
 import numpy as np
+<<<<<<< HEAD
 import pymongo
 import clean_tweets
+=======
+>>>>>>> df3963c6953c754fba9c03a23fb66f46690f8b7d
 
 
 # ------------- set auth and initialize api -------------------------------
@@ -33,11 +39,19 @@ api = tweepy.API(auth) # API object while passing in auth information
 
 # --------------- stream data ---------------------------------
 class MyListener(StreamListener):
+<<<<<<< HEAD
     
     def on_status(self, data):
         if data.lang == 'en':
             tweet = data._json
             # tweets.append(tweet)
+=======
+
+    def on_status(self, data):
+        # geo, lang, place, text, user
+        if data.lang == 'en':#and data.geo != '':
+            tweet = data._json
+>>>>>>> df3963c6953c754fba9c03a23fb66f46690f8b7d
             created_at = tweet['created_at']
             hash_tags = tweet['entities']['hashtags']
             if hash_tags == []:
@@ -85,6 +99,7 @@ class MyListener(StreamListener):
                           user_created, default_profile_image, user_likes, 
                           user_followers, user_following, user_screen_name, 
                           user_num_tweets, user_location]
+<<<<<<< HEAD
                           
             names = ['created_at', 'hash_tags', 'coordinates',
                      'coordinates_type', 'lang', 'country', 'tweet_location', 'text',
@@ -104,10 +119,19 @@ class MyListener(StreamListener):
                 table = db['tweets']
                 table.insert_one(tweet_json)
                         
+=======
+            
+            with open('../data/tweets.csv', 'a') as f:
+                writer = csv.writer(f)
+                writer.writerow(tweet_data)
+            
+            
+>>>>>>> df3963c6953c754fba9c03a23fb66f46690f8b7d
     def on_error(self, status):
         print(status)
         return True
 
+<<<<<<< HEAD
 
 
 if __name__ == '__main__':
@@ -118,6 +142,14 @@ if __name__ == '__main__':
 
     time.sleep(2)
     twitter_stream.disconnect()
+=======
+twitter_stream = Stream(auth, MyListener())
+# twitter_stream.sample(async=True)
+twitter_stream.filter(locations=[-125,25,-65,48], async=True)
+
+time.sleep(7200)
+twitter_stream.disconnect()
+>>>>>>> df3963c6953c754fba9c03a23fb66f46690f8b7d
 
 
 
