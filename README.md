@@ -3,7 +3,7 @@
 Tyler Atkinson
   
 ---
-Using machine learning and NLP to determine whether someone is happy or not, based off their tweets.
+Using machine learning and natural-language-processing to determine whether someone is happy or not, based off of their tweets.
 
 # Table of Contents
   1. [Motivation for project](#motivation)
@@ -13,3 +13,6 @@ Using machine learning and NLP to determine whether someone is happy or not, bas
     - For location
   
 # Motivation
+  
+# Collecting Data
+
