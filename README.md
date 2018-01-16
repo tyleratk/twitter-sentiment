@@ -22,4 +22,4 @@ Using machine learning and natural-language-processing to determine whether some
 In order to get my data ready for any type of exploratory analysis or modeling I had
 to: Remove any links, user '@' handles, and hashtags from the tweets.
 
-To get sentiment, I used a package built into nltk called Vader or Valence Aware Dictionary and sEntiment Reasoner. It is a lexicon and rule-based sentiment analyzer that performs extremely well with sentiments expressed in social media. Social media is hard for natural language processing because people rarely use proper sentence structure when using social media. 
+To get sentiment, I used a package built into nltk called Vader or Valence Aware Dictionary and sEntiment Reasoner. It is a lexicon and rule-based sentiment analyzer that performs extremely well with sentiments expressed in social media. Social media is hard for natural language processing because people rarely use proper sentence structure and tend to use a lot of slang.  
