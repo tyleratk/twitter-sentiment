@@ -12,13 +12,13 @@ Using machine learning and natural-language-processing to determine whether some
     - For NLP
     - For location
   
-# Motivation
+## Motivation
   
-# Collecting Data
+## Collecting Data
 
-# Data Cleaning
+## Data Cleaning
 
-## For Natural Language Processing
+### For Natural Language Processing
 In order to get my data ready for any type of exploratory analysis or modeling I had
 to: Remove any links, user '@' handles, and hashtags from the tweets.
 
