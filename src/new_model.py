@@ -13,15 +13,16 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.svm import LinearSVC, SVR
 import string
 punctuations = string.punctuation
-from spacy.en import English
+# from spacy.en import English
 # parser = English()
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.stop_words import ENGLISH_STOP_WORDS as stopwords 
 from sklearn.pipeline import make_pipeline
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import pickle
 import seaborn as sns
+from nltk.tokenize import word_tokenize
 
 
 
@@ -35,16 +36,17 @@ class TwitterClassifier():
     def get_pipeline(self, classifier):
         print('Creating model...')
         if classifier == 'linear_svc':
-            vectorizer = CountVectorizer()
+            vectorizer = CountVectorizer(tokenizer=word_tokenize)
             model = LinearSVC()
         if classifier == 'linear_svc_tfidf':
             vectorizer = TfidfVectorizer()
             model = LinearSVC()
         if classifier == 'rbf':
-            vectorizer = CountVectorizer()
+            vectorizer = CountVectorizer(tokenizer=word_tokenize)
             model = SVR()
-            
-        return make_pipeline(vectorizer, model)
+        pipeline = Pipeline([('vec', vectorizer), ('model', model)])
+        # return make_pipeline(vectorizer, model)
+        return pipeline
         
         
     def clean_text(self, tweet):
@@ -104,22 +106,26 @@ class TwitterClassifier():
             
     def get_balanced_classes(self, df):
         '''
-        balance out classes before training model so there isn't class imbalance
+        balance out classes before training a model
         '''
         if self.source == 'mongo':
             gb = df.groupby('sentiment')
-            pos = gb.get_group(1).sample(9000)
-            neu = gb.get_group(0).sample(9000)
-            neg = gb.get_group(-1).sample(9000)
+            # gets the size of the smallest class
+            n = min([gb.get_group(g).shape[0] for g in['pos', 'neu', 'neg']])
+            pos = gb.get_group(1).sample(n)
+            neu = gb.get_group(0).sample(n)
+            neg = gb.get_group(-1).sample(n)
             comb = pd.concat([pos, neu, neg])
             X = comb.text.values
             y = comb.sentiment.values
 
         elif self.source == 'nltk':
             gb = df.groupby('sentiment_type')
-            pos = gb.get_group('pos').sample(18000)
-            neu = gb.get_group('neu').sample(18000)
-            neg = gb.get_group('neg').sample(18000)
+            # gets the size of the smallest class
+            n = min([gb.get_group(g).shape[0] for g in['pos', 'neu', 'neg']])
+            pos = gb.get_group('pos').sample(n)
+            neu = gb.get_group('neu').sample(n)
+            neg = gb.get_group('neg').sample(n)
             comb = pd.concat([pos, neu, neg])
             X = comb.text.values
             y = comb.sentiment_type.values
@@ -165,9 +171,7 @@ class TwitterClassifier():
             mask = (df.sentiment >= -0.5) & (df.sentiment <= 0.5)
             df.loc[mask, 'sentiment_type'] = 'neu'
             df.loc[df.sentiment <  -0.5,'sentiment_type'] = 'neg'
-            # tweets, labels = self.get_balanced_classes(df)
-            tweets, labels = df.text.values, df.sentiment_type.values
-
+            tweets, labels = self.get_balanced_classes(df)
             with open('../data/nltk_pkl.pkl', 'wb') as outfile:
                 pickle.dump([tweets, labels], outfile)
                 print('Wrote nltk_pkl')
@@ -190,13 +194,25 @@ class TwitterClassifier():
         get clean data and fit pipeline
         '''
         self.source = source
-        
         tweets, labels = self.load_data(source)
-        X_train, X_test, y_train, y_test = train_test_split(tweets, labels)
-        self.pipeline.fit(X_train, y_train)
-        print('Score: {:.2f}'.format(self.pipeline.score(X_test, y_test)))
         
-        # self.pipeline.fit(tweets, labels)
+        # param_grid = {'model__C': [1.0, .8, .6]}#,
+        # 
+        #               #'model__max_iter': [1000, 1200]}
+        # 
+        # grid_search = GridSearchCV(self.pipeline, param_grid,
+        #                            scoring='neg_log_loss')
+        # # 
+        # grid_search.fit(tweets, labels)
+        # self.estimator = grid_search.best_estimator_
+        # self.estimator.fit(tweets, labels)
+        
+        # X_train, X_test, y_train, y_test = train_test_split(tweets, labels, 
+        #                                                     stratify=labels)
+        # self.pipeline.fit(X_train, y_train)
+        # print('Score: {:.2f}'.format(self.pipeline.score(X_test, y_test)))
+        
+        self.pipeline.fit(tweets, labels)
         
         
     def predict(self, tweet):
@@ -204,6 +220,7 @@ class TwitterClassifier():
         return sentiment of tweet
         '''
         return self.pipeline.predict(tweet)
+        # self.estimator.predict(tweet)
     
 
 
@@ -211,8 +228,8 @@ class TwitterClassifier():
 
 
 if __name__ == '__main__':
-    model = TwitterClassifier('linear_svc_tfidf')
-    model.train('nltk') 
+    model = TwitterClassifier('linear_svc')
+    model.train('nltk_pkl') 
     
  
 
