@@ -26,10 +26,10 @@ if __name__ == '__main__':
     print('Getting sentiment...')
     sid = SentimentIntensityAnalyzer()
     df['sentiment'] = df.text.apply(lambda x: sid.polarity_scores(x)['compound'])   
-    df.loc[df.sentiment >  0.5,'sentiment_type'] = 'pos'
-    mask = (df.sentiment >= -0.5) & (df.sentiment <= 0.5)
+    df.loc[df.sentiment >  0.1,'sentiment_type'] = 'pos'
+    mask = (df.sentiment >= -0.1) & (df.sentiment <= 0.1)
     df.loc[mask, 'sentiment_type'] = 'neu'
-    df.loc[df.sentiment <  -0.5,'sentiment_type'] = 'neg'
+    df.loc[df.sentiment <  -0.1,'sentiment_type'] = 'neg'
     
     with open('../data/clean_tweets.pkl', 'wb') as outfile:
         pickle.dump(df, outfile)
