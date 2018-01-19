@@ -18,22 +18,18 @@ n_features = 1000
 n_topics = 10
 n_top_words = 10
 
+with open('../data/clean_tweets.pkl', 'rb') as infile:
+    df = pickle.load(infile)
+
 
 def clean_tweet(tweet):
     doc = nlp(tweet)
-    # Let's merge all of the proper entities
-    # for ent in doc.ents:
-    #     if ent.root.tag_ != 'DT':
-    #         ent.merge(ent.root.tag_, ent.text, ent.label_)
-    #     else:
-    #         # Keep entities like 'the New York Times' from getting dropped
-    #         ent.merge(ent[-1].tag_, ent.text, ent.label_)
-
-    # Part's of speech to keep in the result
+    doc = [word for word in doc if len(word) >= 4]
     pos_lst = ['ADJ', 'ADV', 'NOUN', 'PROPN', 'VERB'] # NUM?
     tokens = [token.lemma_.lower().replace(' ', '_') for token in doc if token.pos_ in pos_lst]
 
     return(' '.join(token for token in tokens if token not in STOPLIST).replace("'s", '').translate(PUNCT_DICT))
+
 
 def print_n_words(model, feature_names, n):
     for topic_idx, topic in enumerate(model.components_):
@@ -42,9 +38,6 @@ def print_n_words(model, feature_names, n):
     print()
 
                                                                                           
-with open('../data/clean_tweets.pkl', 'rb') as infile:
-    df = pickle.load(infile)
-
 gb = df.groupby('sentiment_type')
 pos_tweets = gb.get_group('pos').sample(1000).text.values
 neg_tweets = gb.get_group('neg').sample(1000).text.values
