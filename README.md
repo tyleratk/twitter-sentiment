@@ -56,7 +56,11 @@ I chose the following scale
 | > -0.5 and < 0.5    | neutral    |
 | <= -0.5             | negative   |
 
-I then created combinations of the following models paired with both CountVectorizer and TfidfVectorizer: Naive Bayes, LinearSVC, and Random Forest Classifier. Ultimately, the LinearSVC along with CountVectorizer performed the best.  
+I then created combinations of the following models paired with both CountVectorizer and TfidfVectorizer: Naive Bayes, LinearSVC, and Random Forest Classifier. Ultimately, the LinearSVC along with CountVectorizer performed the best.
+  
+  
+![](images/lda.png)
+
 
 
 
