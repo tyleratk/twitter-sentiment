@@ -59,12 +59,13 @@ After labeling my tweets on a scale from -1 to 1, I decided to create a range fo
 I then created combinations of the following models paired with both CountVectorizer and TfidfVectorizer: Naive Bayes, LinearSVC, and Random Forest Classifier. Ultimately, the LinearSVC along with CountVectorizer performed the best.
   
   
-#### LDA
-![](images/lda.png)
+<!-- #### LDA
+![](images/lda.png) -->
 
   
 ## Why is this important?
-
+![](images/neg_cloud.png)
+![](images/pos_cloud.png)
 
 
 
