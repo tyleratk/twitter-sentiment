@@ -13,8 +13,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.svm import LinearSVC, SVR
 import string
 punctuations = string.punctuation
-# from spacy.en import English
-# parser = English()
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.stop_words import ENGLISH_STOP_WORDS as stopwords 
@@ -22,7 +21,15 @@ from sklearn.pipeline import make_pipeline
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import pickle
 import seaborn as sns
+import spacy
+from sklearn.feature_extraction.stop_words import ENGLISH_STOP_WORDS
+from string import punctuation
+
 from nltk.tokenize import word_tokenize
+nlp = spacy.load('en')
+STOPLIST = set(list(ENGLISH_STOP_WORDS) + ["n't", "'s", "'m", "ca", "'", "'re",
+                                           "pron"])
+PUNCT_DICT = {ord(punc): None for punc in punctuation if punc not in ['_', '*']}
 
 
 
@@ -36,19 +43,27 @@ class TwitterClassifier():
     def get_pipeline(self, classifier):
         print('Creating model...')
         if classifier == 'linear_svc':
-            vectorizer = CountVectorizer(tokenizer=word_tokenize)
+            vectorizer = CountVectorizer()
             model = LinearSVC()
         if classifier == 'linear_svc_tfidf':
             vectorizer = TfidfVectorizer()
             model = LinearSVC()
-        if classifier == 'rbf':
+        if classifier == 'naivebayes':
             vectorizer = CountVectorizer(tokenizer=word_tokenize)
-            model = SVR()
+            model = MultinomialNB()
         pipeline = Pipeline([('vec', vectorizer), ('model', model)])
         # return make_pipeline(vectorizer, model)
         return pipeline
         
-        
+    def prep(self, tweet):
+        doc = nlp(tweet)
+        # print('In prep')
+        # doc = [word for word in doc if len(word) >= 4]
+        pos_lst = ['ADJ', 'ADV', 'NOUN', 'PROPN', 'VERB']
+        tokens = [token.lemma_.lower().replace(' ', '_') for token in doc if token.pos_ in pos_lst]
+        return(' '.join(token for token in tokens if token not in STOPLIST).replace("'s", '').translate(PUNCT_DICT))
+    
+    
     def clean_text(self, tweet):
         '''
         remove links, usernames, and newlines from tweet
@@ -194,8 +209,7 @@ class TwitterClassifier():
         get clean data and fit pipeline
         '''
         self.source = source
-        tweets, labels = self.load_data(source)
-        
+        tweets, labels = self.load_data(source)        
         # param_grid = {'model__C': [1.0, .8, .6]}#,
         # 
         #               #'model__max_iter': [1000, 1200]}
@@ -229,7 +243,10 @@ class TwitterClassifier():
 
 if __name__ == '__main__':
     model = TwitterClassifier('linear_svc')
-    model.train('nltk_pkl') 
+    model.train('nltk_pkl')
+    with open('../models/model.pkl', 'wb') as outfile:
+        pickle.dump(model, outfile)
+    print('Wrote model to pkl')
     
  
 
