@@ -22,7 +22,7 @@ Positive Sentiment          |  Negative Sentiment
 ## Collecting Data
 I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets that were sent out from the United States. 
 #### Cleaning Data
-In order to get my data ready for any type of exploratory analysis or modeling I had to:
+In order to get my data ready for any type of exploratory analysis or modeling I used regex to:
 - Remove links
 - Remove user '@' handles
 - Remove hashtags
@@ -45,6 +45,7 @@ was going to be okay, I love you lots 💛'
 Jim Mora. Hell, maybe even the worst since The Boz. UGH!'
 ------- {'compound': -0.9793, 'neg': 0.602, 'neu': 0.398, 'pos': 0.0}
 ~~~
+  
 #### Building My Own Model
 After labeling my tweets on a scale from -1 to 1, I decided to create a range for positive, neutral, and negative tweets. At first, 
 I chose the following scale  
