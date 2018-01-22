@@ -14,14 +14,13 @@ Using machine learning and natural-language-processing to determine whether some
 **What is sentiment analysis?**  
 Sentiment analysis is simply working out if a piece of text is positive, neutral, or negative depending on the type of wording they use, any emoji's etc. An example of a happy tweet might be: 
   
-Positive Sentiment                |  Negative Sentiment
-:-------------------------:|:-------------------------:
-![](images/happy_tweet.png)   |  ![](images/sad_tweet.png)
+Positive Sentiment          |  Negative Sentiment
+:--------------------------:|:-------------------------:
+![](images/happy_tweet.png) |  ![](images/sad_tweet.png)
   
   
 ## Collecting Data
-I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets from the United States. 
-
+I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets that were sent out from the United States. 
 #### Cleaning Data
 In order to get my data ready for any type of exploratory analysis or modeling I had to:
 - Remove links
@@ -30,6 +29,7 @@ In order to get my data ready for any type of exploratory analysis or modeling I
   
   
 ## Modeling
+#### Getting Sentiment
 The majority of sentiment analysis approaches take one of two forms: polarity-based, where pieces of texts are classified as either positive or negative, or valence-based, where the intensity of the sentiment is taken into account. The method I used to classify tweets as happy, neutral, or sad uses both approaches.  
   
 To get sentiment, I used a package built into the python package nltk called Vader which stands for Valence Aware Dictionary and sEntiment Reasoner. It is a lexicon and rule-based sentiment analyzer that performs extremely well with sentiments expressed in social media. Social media is hard for natural language processing because people rarely use proper sentence structure and tend to use a lot of slang, and this is where Vader outperforms other tools.
@@ -45,4 +45,17 @@ was going to be okay, I love you lots 💛'
 Jim Mora. Hell, maybe even the worst since The Boz. UGH!'
 ------- {'compound': -0.9793, 'neg': 0.602, 'neu': 0.398, 'pos': 0.0}
 ~~~
+#### Building My Own Model
+After labeling my tweets on a scale from -1 to 1, I decided to create a range for positive, neutral, and negative tweets. At first, 
+I chose the following scale:  
+| Compound Score     | Label    |  
+| -------------------|:--------:|  
+| >= .5              | positive |  
+| > -0.5 and < 0.5   | neutral  |  
+| <= .5              | negative |  
+
+any tweet with a **compound score >= .5**, I labeled as positive, **compound score > -0.5 and compound score < 0.5**, I labeled as neutral, and **compound score <= .5**, I labeled as negative.
+
+
+
 
