@@ -47,12 +47,13 @@ Jim Mora. Hell, maybe even the worst since The Boz. UGH!'
 ~~~
 #### Building My Own Model
 After labeling my tweets on a scale from -1 to 1, I decided to create a range for positive, neutral, and negative tweets. At first, 
-I chose the following scale:  
-| Compound Score     | Label    |  
-| -------------------|:--------:|  
-| >= .5              | positive |  
-| > -0.5 and < 0.5   | neutral  |  
-| <= .5              | negative |  
+I chose the following scale  
+
+| Compound Score      | Label      |
+| ------------------- | ---------- |
+| >= .5               | positive   |
+| > -0.5 and < 0.5    | neutral    |
+| <= .5               | negative   |
 
 any tweet with a **compound score >= .5**, I labeled as positive, **compound score > -0.5 and compound score < 0.5**, I labeled as neutral, and **compound score <= .5**, I labeled as negative.
 
