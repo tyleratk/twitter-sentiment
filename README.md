@@ -9,6 +9,7 @@ Using machine learning and natural-language-processing to determine whether some
   1. [Motivation for project](#motivation)
   2. [Collecting and Cleaning Data](#data)
   3. [Modeling](#modeling)
+  4. [Why is this important?](#important)
   
 ## Motivation
 **What is sentiment analysis?**  
@@ -47,20 +48,23 @@ Jim Mora. Hell, maybe even the worst since The Boz. UGH!'
 ~~~
   
 #### Building my own Model
-After labeling my tweets on a scale from -1 to 1, I decided to create a range for positive, neutral, and negative tweets. At first, 
-I chose the following scale  
+After labeling my tweets on a scale from -1 to 1, I decided to create a range for positive, neutral, and negative tweets and decided on the following scale  
 
 | Compound Score      | Label      |
 | :-----------------: | :--------: |
-| >= 0.5              | positive   |
-| > -0.5 and < 0.5    | neutral    |
-| <= -0.5             | negative   |
+| >= 0.1              | positive   |
+| > -0.1 and < 0.1    | neutral    |
+| <= -0.1             | negative   |
 
 I then created combinations of the following models paired with both CountVectorizer and TfidfVectorizer: Naive Bayes, LinearSVC, and Random Forest Classifier. Ultimately, the LinearSVC along with CountVectorizer performed the best.
   
   
 #### LDA
 ![](images/lda.png)
+
+  
+## Why is this important?
+
 
 
 
