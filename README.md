@@ -50,12 +50,12 @@ After labeling my tweets on a scale from -1 to 1, I decided to create a range fo
 I chose the following scale  
 
 | Compound Score      | Label      |
-| ------------------- | ---------- |
-| >= .5               | positive   |
+| :-----------------: | :--------: |
+| >= 0.5              | positive   |
 | > -0.5 and < 0.5    | neutral    |
-| <= .5               | negative   |
+| <= -0.5             | negative   |
 
-any tweet with a **compound score >= .5**, I labeled as positive, **compound score > -0.5 and compound score < 0.5**, I labeled as neutral, and **compound score <= .5**, I labeled as negative.
+I then created combinations of the following models paired with both CountVectorizer and TfidfVectorizer: Naive Bayes, LinearSVC, and Random Forest Classifier. Ultimately, the LinearSVC along with CountVectorizer performed the best.  
 
 
 
