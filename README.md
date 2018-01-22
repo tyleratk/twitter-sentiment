@@ -18,7 +18,7 @@ Sentiment analysis is simply working out if a piece of text is positive, neutral
   
 Happy Tweet                |  Sad Tweet
 :-------------------------:|:-------------------------:
-![](images/happy_tweet.png =250x)  |  ![](images/sad_tweet.png =250x)
+![](images/happy_tweet.png|height=250)  |  ![](images/sad_tweet.png =250x)
 
 
 
