@@ -46,7 +46,7 @@ Jim Mora. Hell, maybe even the worst since The Boz. UGH!'
 ------- {'compound': -0.9793, 'neg': 0.602, 'neu': 0.398, 'pos': 0.0}
 ~~~
   
-#### Building My Own Model
+#### Building my own Model
 After labeling my tweets on a scale from -1 to 1, I decided to create a range for positive, neutral, and negative tweets. At first, 
 I chose the following scale  
 
@@ -59,6 +59,7 @@ I chose the following scale
 I then created combinations of the following models paired with both CountVectorizer and TfidfVectorizer: Naive Bayes, LinearSVC, and Random Forest Classifier. Ultimately, the LinearSVC along with CountVectorizer performed the best.
   
   
+#### LDA
 ![](images/lda.png)
 
 
