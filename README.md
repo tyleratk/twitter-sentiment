@@ -35,8 +35,14 @@ The majority of sentiment analysis approaches take one of two forms: polarity-ba
 To get sentiment from my tweets, I used a package built into the python package nltk called Vader which stands for Valence Aware Dictionary and sEntiment Reasoner. It is a lexicon and rule-based sentiment analyzer that performs extremely well with sentiments expressed in social media. Social media is hard for natural language processing because people rarely use proper sentence structure and tend to use a lot of slang, and this is where Vader outperforms other tools.
 Using the examples from above, we can get a sentiment score of the tweet. After cleaning the text we get a score composite score of respectively.
 ~~~
-'Happy birthday sweet pea ! 💛💛 I hope you have an amazing 18th birthday! you’re such a kind soul and I hope you’re doing great (: and thank you for listening to me when I needed advice or just needed someone to tell everything was going to be okay, I love you lots 💛' ------- {'compound': 0.9884, 'neg': 0.0, 'neu': 0.499, 'pos': 0.501}
+'Happy birthday sweet pea ! 💛💛 I hope you have an amazing 18th birthday!
+you’re such a kind soul and I hope you’re doing great (: and thank you for
+listening to me when I needed advice or just needed someone to tell everything
+was going to be okay, I love you lots 💛'
+------- {'compound': 0.9884, 'neg': 0.0, 'neu': 0.499, 'pos': 0.501}
 
-'Ugh.  Worst decision by the Seahawks since Percy Harvin over  No, worst since Jim Mora. Hell, maybe even the worst since The Boz. UGH!' ------- {'compound': -0.9793, 'neg': 0.602, 'neu': 0.398, 'pos': 0.0}
+'Ugh.  Worst decision by the Seahawks since Percy Harvin over  No, worst since
+Jim Mora. Hell, maybe even the worst since The Boz. UGH!'
+------- {'compound': -0.9793, 'neg': 0.602, 'neu': 0.398, 'pos': 0.0}
 ~~~
 
