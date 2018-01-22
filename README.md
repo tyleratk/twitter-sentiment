@@ -16,7 +16,7 @@ Using machine learning and natural-language-processing to determine whether some
 **What is sentiment analysis?**  
 Sentiment analysis is simply working out if a piece of text is positive, neutral, or negative depending on the type of wording they use, any emoji's etc. An example of a happy tweet might be: 
   
-Happy Tweet                |  Sad Tweet
+Positive Sentiment                |  Negative Sentiment
 :-------------------------:|:-------------------------:
 ![](images/happy_tweet.png)   |  ![](images/sad_tweet.png)
 
