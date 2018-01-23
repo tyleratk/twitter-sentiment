@@ -1,6 +1,6 @@
 # Twitter Sentiment Analysis  
   
-Tyler Atkinson
+*Tyler Atkinson*
   
 ---
 Using machine learning and natural-language-processing to determine whether someone is happy or not, based off of their tweets.
@@ -40,11 +40,11 @@ Using the examples from above, we can get a sentiment score of the tweet. After 
 you’re such a kind soul and I hope you’re doing great (: and thank you for
 listening to me when I needed advice or just needed someone to tell everything
 was going to be okay, I love you lots 💛'
-------- {'compound': 0.9884, 'neg': 0.0, 'neu': 0.499, 'pos': 0.501}
+>>> {'compound': 0.9884, 'neg': 0.0, 'neu': 0.499, 'pos': 0.501}
 
 'Ugh.  Worst decision by the Seahawks since Percy Harvin over  No, worst since
 Jim Mora. Hell, maybe even the worst since The Boz. UGH!'
-------- {'compound': -0.9793, 'neg': 0.602, 'neu': 0.398, 'pos': 0.0}
+>>> {'compound': -0.9793, 'neg': 0.602, 'neu': 0.398, 'pos': 0.0}
 ~~~
   
 #### Building my own Model
@@ -58,14 +58,16 @@ After labeling my tweets on a scale from -1 to 1, I decided to create a range fo
 
 I then created combinations of the following models paired with both CountVectorizer and TfidfVectorizer: Naive Bayes, LinearSVC, and Random Forest Classifier. Ultimately, the LinearSVC along with CountVectorizer performed the best.
   
-  
-<!-- #### LDA
-![](images/lda.png) -->
 
   
 ## Why is this important?
-![](images/neg_cloud.png)
+If you have a happy or sad label for tweets, you can filter through them by certain keywords or hashtags and look at what "happy" and "not happy" people are saying. For example, filtering by the keywords "football, alabama, georgia" you generate the following word clouds.  
+Can you guess which one is positive and which one is negative?  
+**(hint: the top one is positive)**
+
 ![](images/pos_cloud.png)
+![](images/neg_cloud.png)
+
 
 
 
