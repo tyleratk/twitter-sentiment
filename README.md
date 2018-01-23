@@ -61,8 +61,8 @@ I then created combinations of the following models paired with both CountVector
 
   
 ## Why is this important?
-If you have a happy or sad label for tweets, you can filter through them by certain keywords or hashtags and look at what "happy" and "not happy" people are saying. For example, filtering by the keywords "football, alabama, georgia" you generate the following word clouds.  
-Can you guess which one is positive and which one is negative?  
+If you have a happy or sad label for tweets, you can filter through them by certain keywords or hashtags and look at what "happy" and "not happy" people are saying. For example, filtering by the keywords "football, alabama, georgia" you generate the following word clouds.   
+#### Can you guess which one is positive and which one is negative?  
 **(hint: the top one is positive)**
 
 ![](images/pos_cloud.png)
