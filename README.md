@@ -1,4 +1,4 @@
-# Twitter Sentiment Analysis  
+# Show Me Your Tweets 
   
 *Tyler Atkinson*
   
@@ -58,15 +58,19 @@ After labeling my tweets on a scale from -1 to 1, I decided to create a range fo
 
 I then created combinations of the following models paired with both CountVectorizer and TfidfVectorizer: Naive Bayes, LinearSVC, and Random Forest Classifier. Ultimately, the LinearSVC along with CountVectorizer performed the best.
   
-
+  
   
 ## Why is this important?
-If you have a happy or sad label for tweets, you can filter through them by certain keywords or hashtags and look at what "happy" and "not happy" people are saying. For example, filtering by the keywords "football, alabama, georgia" you generate the following word clouds.   
+If you have a happy or sad label for tweets, you can filter through them by certain keywords or hashtags and look at what "happy" and "not happy" people are saying. For example, filtering by tweets with the keywords "football, alabama, georgia" to look at what people were saying about the college football championship game on January 8th, you can generate the following word clouds.   
 #### Can you guess which one is positive and which one is negative?  
 **(hint: the top one is positive)**
-
 ![](images/pos_cloud.png)
 ![](images/neg_cloud.png)
+
+You can also get stats about these tweets as well. Using the above example, there were 374 postive tweets with an average sentiment of .54, and 161 negative tweets with an average sentiment of -.49. 
+
+### Hashtag Analysis
+Say you're a company who recently released a new product and you want to know what people think about
 
 
 
