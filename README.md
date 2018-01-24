@@ -13,7 +13,7 @@ Using machine learning and natural-language-processing to determine whether some
   
 ## Motivation
 **What is sentiment analysis?**  
-Sentiment analysis is simply working out if a piece of text is positive, neutral, or negative depending on the type of wording they use, any emoji's etc. An example of a happy tweet might be: 
+Sentiment analysis is simply working out if a piece of text is positive, neutral, or negative depending on the type of wording they use, any emoji's etc. An example of positive and negative tweets would look like: 
   
 Positive Sentiment          |  Negative Sentiment
 :--------------------------:|:-------------------------:
@@ -21,7 +21,7 @@ Positive Sentiment          |  Negative Sentiment
   
   
 ## Collecting Data
-I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets that were sent out from the United States. 
+I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets that were sent out from the United States. After receiving a tweet from the API, I parsed it to pull out only the data I wanted, the text, time, location, etc and saved it to a mongo database. 
 #### Cleaning Data
 In order to get my data ready for any type of exploratory analysis or modeling I used regex to:
 - Remove links
@@ -48,7 +48,7 @@ Jim Mora. Hell, maybe even the worst since The Boz. UGH!'
 ~~~
   
 #### Building my own Model
-After labeling my tweets on a scale from -1 to 1, I decided to create a range for positive, neutral, and negative tweets and decided on the following scale  
+After labeling my tweets on a scale from -1 to 1, I decided to create a range for positive, neutral, and negative tweets and chose the following scale  
 
 | Compound Score      | Label      |
 | :-----------------: | :--------: |
@@ -61,16 +61,26 @@ I then created combinations of the following models paired with both CountVector
   
   
 ## Why is this important?
-If you have a happy or sad label for tweets, you can filter through them by certain keywords or hashtags and look at what "happy" and "not happy" people are saying. For example, filtering by tweets with the keywords "football, alabama, georgia" to look at what people were saying about the college football championship game on January 8th, you can generate the following word clouds.   
+If you have a happy or sad label for tweets, you can filter through them by certain keywords or hashtags and look at what "happy" and "not happy" people are saying. For example, if we wanted to look at what people were saying about the college football championship game on January 8th, we could filter by the keywords "football, Alabama, Georgia" and generate the following word clouds.
+ 
 #### Can you guess which one is positive and which one is negative?  
 **(hint: the top one is positive)**
-![](images/pos_cloud.png)
+![](images/pos_cloud.png)  
+
 ![](images/neg_cloud.png)
 
 You can also get stats about these tweets as well. Using the above example, there were 374 postive tweets with an average sentiment of .54, and 161 negative tweets with an average sentiment of -.49. 
 
 ### Hashtag Analysis
-Say you're a company who recently released a new product and you want to know what people think about
+Another tool you could use is semantic plots to visualize topics
+**Say you're a company who recently released a new product and you want to know what people think about**
+
+  
+  
+  
+## References
+  **Hutto, C.J. & Gilbert, E.E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. Eighth International Conference on Weblogs and Social Media (ICWSM-14). Ann Arbor, MI, June 2014.** 
+
 
 
 
