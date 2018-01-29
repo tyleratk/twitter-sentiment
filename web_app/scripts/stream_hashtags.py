@@ -40,14 +40,14 @@ class MyListener(StreamListener):
                 text = tweet['text']
             sentiment = get_sentiment(text)
             tweet_data = [text, sentiment]
-            # import pdb; pdb.set_trace()
+
             filename = 'data/' + hash_tag + '.csv'
             if os.path.exists(filename):
-                with open('data/' + hash_tag + '.csv', 'a') as f:
+                with open(filename, 'a') as f:
                     writer = csv.writer(f)
                     writer.writerow(tweet_data)
             else:
-                with open('data/' + hash_tag + '.csv', 'w') as f:
+                with open(filename, 'x') as f:
                     writer = csv.writer(f)
                     writer.writerow(tweet_data)                
             
@@ -63,7 +63,6 @@ def get_hashtag_info(auth, hashtag):
     
     twitter_stream = Stream(auth, MyListener())
     twitter_stream.filter(track=hashtag, async=True)
-    print('Streaming')
     time.sleep(10)
     twitter_stream.disconnect()
 
