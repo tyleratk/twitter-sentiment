@@ -1,7 +1,7 @@
 import pickle
 import pandas as pd
-from textacy.vsm import Vectorizer
-import textacy
+# from textacy.vsm import Vectorizer
+# import textacy
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 import matplotlib.pyplot as plt
 import spacy
