@@ -41,10 +41,15 @@ class MyListener(StreamListener):
             sentiment = get_sentiment(text)
             tweet_data = [text, sentiment]
             # import pdb; pdb.set_trace()
-                          
-            with open('data/' + hash_tag + '.csv', 'a') as f:
-                writer = csv.writer(f)
-                writer.writerow(tweet_data)
+            filename = 'data/' + hash_tag + '.csv'
+            if os.path.exists(filename):
+                with open('data/' + hash_tag + '.csv', 'a') as f:
+                    writer = csv.writer(f)
+                    writer.writerow(tweet_data)
+            else:
+                with open('data/' + hash_tag + '.csv', 'w') as f:
+                    writer = csv.writer(f)
+                    writer.writerow(tweet_data)                
             
             
     def on_error(self, status):
