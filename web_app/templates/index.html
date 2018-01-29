@@ -26,7 +26,7 @@
 				<ul>
 					<li class="current_page_item"><a href="/" title="">Home</a></li>
 					<li><a href="/demo" title="">Demo</a></li>
-					<li><a href="/about" title="">About Me</a></li>
+					<li><a href="/about" title="">About</a></li>
 				</ul>
 			</div>
 			<ul class="contact">
@@ -42,41 +42,60 @@
 
 <div id="page-wrapper">
 	<div class="title">
-		<h2>Summary</h2>
-		<p id="page-p" style="font-size: 75%;text-align: center;">(Scroll down to get straight to my findings)<br><br></p>
-		This site is a working demo showcasing my work done for my Galvanize DSI capstone.
-
+		<h2>Synopsis</h2>
+	</div>
+	<div>
+		<!-- <p id="page-p" style="font-size: 75%;text-align: center;">(Scroll down to get straight to my findings)<br><br></p> -->
+		<p id="page-p">
+		This site is a working demo showcasing my work done for my Galvanize DSI capstone. I utilized Twitter's API to collect over 800k tweets and constructed a model to classify sentiment. I then used that to identify various demographics filtering by location and/or keywords. 
+	</p>
+	<a href="\demo" style="font-size: 125%">Click Here for a Demo</a><br><br>
 	</div>
 		
 	<!-- <p id="page-p" style='font-size: 75%;'>
 		(Scroll down to get straight to my findings)
 	</p> -->
-	<p id="page-p" style="text-align: center;">
+	<!-- <p id="page-p" style="text-align: center;">
 		
-	</p>
-	<div>
+	</p> -->
+	<!-- <div>
 		<h3>Motivation for this project</h3>
 	</div>
 	<p id="page-p">
-		<b>What is sentiment analysis?</b>
-			Sentiment analysis is simply working out if a piece of text is positive, neutral, or negative depending on the type of wording they use, any emoji's etc. An example of positive and negative tweets would look like:</p><br>
+	What is sentiment analysis? Sentiment analysis is simply working out if a piece of text is positive, neutral, or negative depending on the type of wording they use, any emoji's etc. An example of positive and negative tweets would look like:<br><br>
+	<table style="width:60%;margin: 0px auto;">
+		<tr>
+    	<th>Happy</th>
+    	<th>Sad</th> 
+  	</tr>
+		<tr>
+			<th>
+				<img src='/static/images/happy_tweet.png' width='350'><br>
+			</th>
+			<th>
+				<img src='/static/images/sad_tweet.png' width='350'>
+			</th>
+		</tr>
+	</table>
+	
+	</p><br>
 	
 	<h3>Collecting Data</h3>
 	<p id="page-p">I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets that were sent out from the United States. After receiving a tweet from the API, I parsed it to pull out only the data I wanted, the text, time, location, etc and saved it to a mongo database.</p><br>
 	<h3>Modeling</h3>
-	<p id="page-p">To get sentiment, I used a package built into the python package nltk called Vader which stands for Valence Aware Dictionary and sEntiment Reasoner. It is a lexicon and rule-based sentiment analyzer that performs extremely well with sentiments expressed in social media. Social media is hard for natural language processing because people rarely use proper sentence structure and tend to use a lot of slang, and this is where Vader outperforms other tools. Using the examples from above, we can get a sentiment score of the tweet. After cleaning the text we get a score composite score of .99 and -.98 respectively.<br><br>
-	After labeling my tweets on a scale from -1 to 1, I decided to create a range for positive, neutral, and negative tweets and chose >= .1 as positive, > -0.1 and < 0.1 as neutral and <= -0.1 as negative. After cleaning the tweets to remove links, usernames, and hashtags I then created combinations of the following models paired with both CountVectorizer and TfidfVectorizer: Naive Bayes, LinearSVC, and Random Forest Classifier. Ultimately, the LinearSVC along with CountVectorizer performed the best.<br><br>
+	<p id="page-p">To get sentiment, I used a package built into the python package nltk called Vader which stands for Valence Aware Dictionary and sEntiment Reasoner. It is a lexicon and rule-based sentiment analyzer that performs extremely well with sentiments expressed in social media. Social media is hard for natural language processing because people rarely use proper sentence structure and tend to use a lot of slang, and this is where Vader outperforms other tools. Using the examples from above, we can get a sentiment score of the tweet. After cleaning the text we get a score composite score of <b>.99</b> and <b>-.98</b> respectively.<br><br>
+	After labeling my tweets on a scale from -1 to 1, I decided to create a range for positive, neutral, and negative tweets and chose >= .1 as positive, > -0.1 and < 0.1 as neutral and <= -0.1 as negative. After cleaning the tweets to remove links, usernames, and hashtags I then created combinations of the following models paired with both CountVectorizer and TfidfVectorizer: Naive Bayes, LinearSVC, and Random Forest Classifier. Ultimately, the LinearSVC along with CountVectorizer performed the best.<br><br> -->
 	<!-- The CountVectorizer simply turns all my tweets into a matrix of token counts.  -->
 
-</p>
-</div>
+<!-- </p>
+</div> -->
 
 <div class="wrapper">
 	<div class="title">
 		<h2>Findings</h2>
 	</div>
 	<p id="page-p">
-		I broke my analysis into two parts: looking at sentiment and location along with sentiment and hashtag or keywords. Below you can see a plot of the average sentiment per county and below that, other plots and figures I made filtering by hashtags and keywords.
+		I broke my analysis into two parts: looking at sentiment and location along with sentiment and hashtag or keywords. Below is a plot of the average sentiment per county, the count of tweets per county, and the coordintates of each tweet in my dataset. To see my analysis of kerywords and hashtags, head to the <a href="\about">About</a> page.
 	</p>
 	
 	<br><br><br><br>
@@ -111,7 +130,7 @@
 		vizElement.parentNode.insertBefore(scriptElement, vizElement);
 	</script>
 	<br><br><br><br><br><br>
-	<div class="title">
+	<!-- <div class="title">
 		<h2>Other Plots</h2><br>
 		<p id="page-p">
 			To apply this to a real topic, I filtered tweets containing words and hashtags that related to the two NFL teams playing in Super Bowl LII. I created two groups, one about the Patriots (‘pats, brady, patriots’ etc.) and one about the Eagles (‘eagles’,‘Philadelphia’,‘nick foles’, etc.). Not surprisingly, most people from Massachusetts were tweeting about the Patriots and same for Pennsylvania and the Eagles.
@@ -134,7 +153,7 @@
 		<img src="/static/images/pos_semantic.png" width='850'>
 		<img src="/static/images/neg_semantic.png" width='850'><br><br>
 		
-	</div>
+	</div> -->
 	</div>
 </div>
 
