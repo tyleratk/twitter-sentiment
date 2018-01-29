@@ -37,7 +37,7 @@ Released   : 20131223
 				<ul>
 					<li><a href="/" title="">Home</a></li>
 					<li><a href="/demo" title="">Demo</a></li>
-					<li><a href="/about" title="">About Me</a></li>
+					<li><a href="/about" title="">About</a></li>
 				</ul>
 			</div>
 			<ul class="contact">
@@ -52,14 +52,66 @@ Released   : 20131223
 
 <div id="page-wrapper">
 		<div class="title">
-			<h2>About Me</h2>
+			<h2>About the Project</h2>
 		</div>
-		<p></p>
+		<div>
+			<h3>Motivation</h3>
+		</div>
+		<p id="page-p">
+		What is sentiment analysis? Sentiment analysis is simply working out if a piece of text is positive, neutral, or negative depending on the type of wording they use, any emoji's etc. An example of positive and negative tweets would look like:<br><br>
+		<table style="width:60%;margin: 0px auto;">
+			<tr>
+				<th>Happy</th>
+				<th>Sad</th> 
+			</tr>
+			<tr>
+				<th>
+					<img src='/static/images/happy_tweet.png' width='350'><br>
+				</th>
+				<th>
+					<img src='/static/images/sad_tweet.png' width='350'>
+				</th>
+			</tr>
+		</table>
+		
+		</p><br>
+		
+		<h3>Collecting Data</h3>
+		<p id="page-p">I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets that were sent out from the United States. After receiving a tweet from the API, I parsed it to pull out only the data I wanted, the text, time, location, etc and saved it to a mongo database.</p><br>
+		<h3>Modeling</h3>
+		<p id="page-p">To get sentiment, I used a package built into the python package nltk called Vader which stands for Valence Aware Dictionary and sEntiment Reasoner. It is a lexicon and rule-based sentiment analyzer that performs extremely well with sentiments expressed in social media. Social media is hard for natural language processing because people rarely use proper sentence structure and tend to use a lot of slang, and this is where Vader outperforms other tools. Using the examples from above, we can get a sentiment score of the tweet. After cleaning the text we get a score composite score of <b>.99</b> and <b>-.98</b> respectively.<br><br>
+		After labeling my tweets on a scale from -1 to 1, I decided to create a range for positive, neutral, and negative tweets and chose >= .1 as positive, > -0.1 and < 0.1 as neutral and <= -0.1 as negative. After cleaning the tweets to remove links, usernames, and hashtags I then created combinations of the following models paired with both CountVectorizer and TfidfVectorizer: Naive Bayes, LinearSVC, and Random Forest Classifier. Ultimately, the LinearSVC along with CountVectorizer performed the best.<br><br>
+		<!-- The CountVectorizer simply turns all my tweets into a matrix of token counts.  -->
+		
+		</p>
+		</div>
+
 </div>
 
 <div class="wrapper">
 	<div class="title">
-		<h2>Findings</h2>
+		<h2>Other Plots</h2><br>
+		<p id="page-p">
+			To apply this to a real topic, I filtered tweets containing words and hashtags that related to the two NFL teams playing in Super Bowl LII. I created two groups, one about the Patriots (‘pats, brady, patriots’ etc.) and one about the Eagles (‘eagles’,‘Philadelphia’,‘nick foles’, etc.). Not surprisingly, most people from Massachusetts were tweeting about the Patriots and same for Pennsylvania and the Eagles.
+		</p><br>
+		<img src="/static/images/pats.png" width='850'><br><br>
+		<img src="/static/images/eagles.png" width='850'><br><br><br><br>
+		<h2>Word Clouds</h2>
+		<p id="page-p">
+			Using the same keywords as above, I constructed two word clouds, one for the positive tweets and one for the negative tweets. Can you guess which one is which?
+		</p>
+		<p id="page-p" style="font-size: 75%;text-align: center;">
+			(hint: the top one is positive sentiment)
+		</p>
+		<img src="/static/images/pos_cloud.png" width='850'><br><br>
+		<img src="/static/images/neg_cloud.png" width='850'><br><br><br><br>
+		<h2>Grouping by topic</h2>
+		<p id="page-p">
+			
+		</p>
+		<img src="/static/images/pos_semantic.png" width='850'>
+		<img src="/static/images/neg_semantic.png" width='850'><br><br>
+		
 	</div>
 	<p></p>
 	</div>
