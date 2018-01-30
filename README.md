@@ -5,7 +5,7 @@
 ---
 Using machine learning and natural-language-processing to determine whether someone is happy or not, based off of their tweets.
 
-http://ec2-54-152-77-199.compute-1.amazonaws.com:8105
+www.twittersentiment.com
 
 # Table of Contents
   1. [Motivation for project](#motivation)
@@ -15,7 +15,8 @@ http://ec2-54-152-77-199.compute-1.amazonaws.com:8105
   
 ## Motivation
 **What is sentiment analysis?**  
-Sentiment analysis is simply working out if a piece of text is positive, neutral, or negative depending on the type of wording they use, any emoji's etc. An example of positive and negative tweets would look like: 
+Sentiment analysis identifies if a piece of text is positive, neutral, or negative depending on the type of wording they use, any emoji's etc. An example of positive and negative tweets would look like:
+
   
 Positive Sentiment          |  Negative Sentiment
 :--------------------------:|:-------------------------:
@@ -23,7 +24,7 @@ Positive Sentiment          |  Negative Sentiment
   
   
 ## Collecting Data
-I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets that were sent out from the United States. After receiving a tweet from the API, I parsed it to pull out only the data I wanted, the text, time, location, etc and saved it to a mongo database. 
+I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets that were sent out from the United States. After receiving a tweet from the API, I parsed it to pull out only the data I wanted: the text, time, location, etc and saved it to a mongo database. 
 #### Cleaning Data
 In order to get my data ready for any type of exploratory analysis or modeling I used regex to:
 - Remove links
@@ -58,9 +59,25 @@ After labeling my tweets on a scale from -1 to 1, I decided to create a range fo
 | > -0.1 and < 0.1    | neutral    |
 | <= -0.1             | negative   |
 
-I then created combinations of the following models paired with both CountVectorizer and TfidfVectorizer: Naive Bayes, LinearSVC, and Random Forest Classifier. Ultimately, the LinearSVC along with CountVectorizer performed the best.
+I then created combinations of the following models paired with both CountVectorizer and TfidfVectorizer: Naive Bayes, LinearSVC, and Random Forest Classifier. Ultimately, the LinearSVC along with CountVectorizer performed the best.  
   
+CountVectorizer works by turning a collection of text documents (in my case tweets) into a sparse matrix of token counts without any stop words (the, is, a, so, very, etc).  
+For example, the tweet 'Happy birthday sweet pea ! 💛💛 I hope you have an amazing 18th birthday!' would be turned into  
   
+| Token | Count |
+| :----:| :----:|
+| 18th  |  1    |
+| amazing  |  1    |
+| an  |  1    |
+| birthday  |  2    |
+| happy  |  1    |
+| have  |  1    |
+| hope  |  1    |
+| pea  |  1    |
+| sweet  |  1    |
+| you  |  1    |
+  
+This step also prepares my data for modeling, since you cannot enter raw text into LinearSVC. 
   
 ## Why is this important?
 If you have a happy or sad label for tweets, you can filter through them by certain keywords or hashtags and look at what "happy" and "not happy" people are saying. For example, if we wanted to look at what people were saying about the college football championship game on January 8th, we could filter by the keywords "football, Alabama, Georgia" and generate the following word clouds.
