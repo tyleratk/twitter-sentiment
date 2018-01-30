@@ -82,6 +82,13 @@ This step also prepares my data for modeling, since you cannot enter raw text in
 You can adjust these margins depending on your use case, a hard (smaller) margin will be accurate and a soft (bigger) margin will be better at generalization. For my project I did not have to adjust this parameter. 
   
 ## Why is sentiment important?
+  
+### Location analysis  
+To see if there was a relationship between someone’s location and the happiness of their tweet, I graphed the average sentiment of every county I had in my dataset. I did however find that there were counties with only one tweet, which obviously does not accurately represent that county.  
+https://public.tableau.com/shared/XJ5FFF4RR?:display_count=yes - Click to see interactive version  
+![](images/counties.png) 
+  
+### Hashtag Analysis
 If you have a happy or sad label for tweets, you can filter through them by certain keywords or hashtags and look at what "happy" and "not happy" people are saying. For example, if we wanted to look at what people were saying about the college football championship game on January 8th, we could filter by the keywords **"football, Alabama, Georgia"** and generate the following word clouds.
  
 #### Can you guess which one is positive and which one is negative?  
@@ -92,7 +99,13 @@ If you have a happy or sad label for tweets, you can filter through them by cert
 
 You can get statistics about these tweets as well. In the above example, there were 374 postive tweets with an average sentiment of .54, and 161 negative tweets with an average sentiment of -.49. 
   
-### Hashtag Analysis
+For another example, I filtered tweets containing words and hashtags that related to the two NFL teams playing in Super Bowl LII. I created two groups, one about the Patriots **(‘pats, brady, patriots’ etc.)** and one about the Eagles **(‘eagles’,‘Philadelphia’,‘nick foles’, etc.)**. Not surprisingly, most people from Massachusetts were tweeting about the Patriots and same for Pennsylvania and the Eagles.
+#### Number of tweets about the Patriots  
+![](images/pats.png)  
+#### Number of tweets about the Eagles  
+![](images/eagles.png)  
+  
+  
 Another tool I used was building semantic plots to visualize topics. To get these topics I used LDA or Latent Dirichlet Allocation. 
   
   
