@@ -1,4 +1,4 @@
-# Show Me Your Tweets 
+# Twitter Sentiment Analysis in Under 140 Characters
   
 *Tyler Atkinson*
   
@@ -77,7 +77,9 @@ For example, the tweet 'Happy birthday sweet pea ! 💛💛 I hope you have an a
 | sweet  |  1    |
 | you  |  1    |
   
-This step also prepares my data for modeling, since you cannot enter raw text into LinearSVC. 
+This step also prepares my data for modeling, since you cannot enter raw text into LinearSVC. LinearSVC works by plotting your data, and it tries to find a hyperplane that separates classes in this feature space. For my application, these classes consisted of tweets that were positive, neutral, or negative. An optimal separating hyperplane separates classes and maximized the margin between the classes. An example of this might look like this  
+![](images/hyperplane.png)
+You can adjust these margins depending on your use case, a hard (smaller) margin will be accurate and a soft (bigger) margin will be better at generalization. For my project I did not have to adjust this parameter. 
   
 ## Why is this important?
 If you have a happy or sad label for tweets, you can filter through them by certain keywords or hashtags and look at what "happy" and "not happy" people are saying. For example, if we wanted to look at what people were saying about the college football championship game on January 8th, we could filter by the keywords "football, Alabama, Georgia" and generate the following word clouds.
