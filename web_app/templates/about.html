@@ -51,7 +51,7 @@ Released   : 20131223
 			</div>
 			<ul class="contact">
 				<li><a href="https://www.linkedin.com/in/tyleratk/" target="_blank" class="icon icon-linkedin"><span></span></a></li>
-				<li><a href="https://github.com/tyleratk/twitter" target="_blank" class="icon icon-github"><span></span></a></li>
+				<li><a href="https://github.com/tyleratk/twitter-sentiment" target="_blank" class="icon icon-github"><span></span></a></li>
 			</ul>
 			</br></br>
 			<p style="color:white;">Using machine learning and natural-language-processing to determine whether someone is happy or not, based off of their tweets.</p>
@@ -86,7 +86,7 @@ Released   : 20131223
 		</p><br>
 		
 		<h3>Collecting Data</h3>
-		<p id="page-p">I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets that were sent out from the United States. After receiving a tweet from the API, I parsed it to pull out only the data I wanted, the text, time, location, etc and saved it to a mongo database.</p><br>
+		<p id="page-p">I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets that were sent out from the United States. After receiving a tweet from the API, I parsed it to pull out only the data I wanted: the text, time, location, etc and saved it to a mongo database.</p><br>
 		<h3>Modeling</h3>
 		<p id="page-p">To get sentiment, I used a package built into the python package nltk called Vader. It is a lexicon and rule-based sentiment analyzer that performs extremely well with sentiments expressed in social media. Social media is hard for natural language processing because people rarely use proper sentence structure and tend to use a lot of slang, and this is where Vader outperforms other tools. Using the examples from above, we can get a sentiment score of the tweet. After cleaning the text we get a score composite score of <span class='big'>.99 and -.98</span> respectively.<br><br>
 		After labeling my tweets on a scale from -1 to 1, I decided to create a range for positive, neutral, and negative tweets and chose >= .1 as positive, > -0.1 and < 0.1 as neutral and <= -0.1 as negative. After cleaning the tweets to remove links, usernames, and hashtags I then created combinations of the following models paired with both CountVectorizer and TfidfVectorizer: Naive Bayes, LinearSVC, and Random Forest Classifier. Ultimately, the LinearSVC along with CountVectorizer performed the best.<br><br>
@@ -130,7 +130,7 @@ Released   : 20131223
 <div id="copyright" class="container">
 		<ul class="contact" style="width: 70%;margin: auto;">
       <li><a href="https://www.linkedin.com/in/tyleratk/" target="_blank" class="icon icon-linkedin"><span></span></a></li>
-      <li><a href="https://github.com/tyleratk/twitter" target="_blank" class="icon icon-github"><span></span></a></li>
+      <li><a href="https://github.com/tyleratk/twitter-sentiment" target="_blank" class="icon icon-github"><span></span></a></li>
 		</ul>
 </div>
 </body>

@@ -81,8 +81,8 @@ This step also prepares my data for modeling, since you cannot enter raw text in
 ![](images/hyperplane.png)
 You can adjust these margins depending on your use case, a hard (smaller) margin will be accurate and a soft (bigger) margin will be better at generalization. For my project I did not have to adjust this parameter. 
   
-## Why is this important?
-If you have a happy or sad label for tweets, you can filter through them by certain keywords or hashtags and look at what "happy" and "not happy" people are saying. For example, if we wanted to look at what people were saying about the college football championship game on January 8th, we could filter by the keywords "football, Alabama, Georgia" and generate the following word clouds.
+## Why is sentiment important?
+If you have a happy or sad label for tweets, you can filter through them by certain keywords or hashtags and look at what "happy" and "not happy" people are saying. For example, if we wanted to look at what people were saying about the college football championship game on January 8th, we could filter by the keywords **"football, Alabama, Georgia"** and generate the following word clouds.
  
 #### Can you guess which one is positive and which one is negative?  
 **(hint: the top one is positive)**
@@ -90,12 +90,10 @@ If you have a happy or sad label for tweets, you can filter through them by cert
 
 ![](images/neg_cloud.png)
 
-You can also get stats about these tweets as well. Using the above example, there were 374 postive tweets with an average sentiment of .54, and 161 negative tweets with an average sentiment of -.49. 
-
+You can get statistics about these tweets as well. In the above example, there were 374 postive tweets with an average sentiment of .54, and 161 negative tweets with an average sentiment of -.49. 
+  
 ### Hashtag Analysis
-Another tool you could use is semantic plots to visualize topics
-**Say you're a company who recently released a new product and you want to know what people think about**
-
+Another tool I used was building semantic plots to visualize topics. To get these topics I used LDA or Latent Dirichlet Allocation. 
   
   
   
