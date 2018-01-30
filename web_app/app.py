@@ -10,7 +10,8 @@ import base64
 import io
 import pickle
 import sys
-sys.path.insert(0, '/Users/galvanize/twitter/src')
+# sys.path.insert(0, '/Users/galvanize/twitter/src')
+sys.path.insert(0, '/home/ubuntu/twitter/src')
 from new_model import TwitterClassifier
 
 with open('static/models/model.pkl', 'rb') as infile:
