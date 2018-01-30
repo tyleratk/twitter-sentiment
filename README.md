@@ -107,8 +107,7 @@ For another example, I filtered tweets containing words and hashtags that relate
 #### Number of tweets about the Eagles  
 ![](images/eagles.png)  
   
-  
-Another tool I used was building semantic plots to visualize topics. To get these topics I used LDA or Latent Dirichlet Allocation. 
+[comment]: <> (Another tool I used was building semantic plots to visualize topics. To get these topics I used LDA or Latent Dirichlet Allocation. )
   
   
   
