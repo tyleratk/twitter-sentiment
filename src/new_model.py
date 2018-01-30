@@ -24,6 +24,7 @@ import seaborn as sns
 import spacy
 from sklearn.feature_extraction.stop_words import ENGLISH_STOP_WORDS
 from string import punctuation
+from sklearn.ensemble import RandomForestRegressor
 
 from nltk.tokenize import word_tokenize
 nlp = spacy.load('en')
@@ -51,7 +52,11 @@ class TwitterClassifier():
         if classifier == 'naivebayes':
             vectorizer = CountVectorizer(tokenizer=word_tokenize)
             model = MultinomialNB()
+        if classifier == 'rf':
+            vectorizer = CountVectorizer(tokenizer=word_tokenize)
+            model = RandomForestRegressor()
         pipeline = Pipeline([('vec', vectorizer), ('model', model)])
+
         # return make_pipeline(vectorizer, model)
         return pipeline
         
@@ -182,10 +187,10 @@ class TwitterClassifier():
             sid = SentimentIntensityAnalyzer()
             df['sentiment'] = df.text.apply(lambda x: sid.polarity_scores(x)['compound'])   
             df = df[['text', 'sentiment']]
-            df.loc[df.sentiment >  0.5,'sentiment_type'] = 'pos'
-            mask = (df.sentiment >= -0.5) & (df.sentiment <= 0.5)
+            df.loc[df.sentiment >  0.1,'sentiment_type'] = 'pos'
+            mask = (df.sentiment >= -0.1) & (df.sentiment <= 0.1)
             df.loc[mask, 'sentiment_type'] = 'neu'
-            df.loc[df.sentiment <  -0.5,'sentiment_type'] = 'neg'
+            df.loc[df.sentiment <  -0.1,'sentiment_type'] = 'neg'
             tweets, labels = self.get_balanced_classes(df)
             with open('../data/nltk_pkl.pkl', 'wb') as outfile:
                 pickle.dump([tweets, labels], outfile)
@@ -209,7 +214,7 @@ class TwitterClassifier():
         get clean data and fit pipeline
         '''
         self.source = source
-        tweets, labels = self.load_data(source)        
+        tweets, labels = self.load_data(source)       
         # param_grid = {'model__C': [1.0, .8, .6]}#,
         # 
         #               #'model__max_iter': [1000, 1200]}
@@ -244,6 +249,7 @@ class TwitterClassifier():
 if __name__ == '__main__':
     model = TwitterClassifier('linear_svc')
     model.train('nltk_pkl')
+    
     with open('../models/model.pkl', 'wb') as outfile:
         pickle.dump(model, outfile)
     print('Wrote model to pkl')
