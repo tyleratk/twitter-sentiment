@@ -7,14 +7,10 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import seaborn as sns
 import base64
+# from io import StringIO
+# from StringIO import StringIO
+# from io import StringIO
 import io
-import pickle
-import sys
-sys.path.insert(0, '/Users/galvanize/twitter/src')
-from new_model import TwitterClassifier
-
-with open('static/models/model.pkl', 'rb') as infile:
-    model = pickle.load(infile)
 
 app = Flask(__name__)  
 
@@ -64,11 +60,7 @@ def get_user_info():
             
             # top 10 pos/neg
             #
-            preds = pd.DataFrame(model.predict(df.text.values), columns=["My Model's Prediction"])
-            pred_probs = pd.DataFrame(mode.predict_proba(df.text.values), columns=["My Model's Probability"])
-            # print(preds)
-            df = pd.concat([df, preds, pred_probs], axis=1).sort_values('sentiment', ascending=False)
-            
+            df = df.sort_values('sentiment', ascending=False)
             top10 = df.head(10).to_html(classes='most_recent')
             bottom10 = df.tail(10).sort_values('sentiment', ascending=False)
             bottom10 = bottom10.to_html(classes='most_recent')
@@ -103,6 +95,6 @@ def about():
     
     
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=8000, debug=True)
+    app.run('0.0.0.0', port=8105, threaded=True)
     # app.debug = True
 

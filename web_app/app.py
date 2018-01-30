@@ -7,10 +7,14 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import seaborn as sns
 import base64
-# from io import StringIO
-# from StringIO import StringIO
-# from io import StringIO
 import io
+import pickle
+import sys
+sys.path.insert(0, '/Users/galvanize/twitter/src')
+from new_model import TwitterClassifier
+
+with open('static/models/model.pkl', 'rb') as infile:
+    model = pickle.load(infile)
 
 app = Flask(__name__)  
 
@@ -38,8 +42,22 @@ def get_user_info():
         try:
             results = get_info(user_name, option=option)
             df = pd.DataFrame(results, columns=['text', 'sentiment']).round(2)
-            table = [df.head(10).to_html(classes='most_recent')]
-            return render_template('results.html', tables=table, titles=['10 Most Recent'])
+            ten_most_recent = df.head(10)
+            most_recent_preds = pd.DataFrame(model.predict(ten_most_recent.text.values),
+                                             columns=["My Model's Prediction"])
+            ten_most_recent = pd.concat([ten_most_recent, most_recent_preds], axis=1)
+            preds = pd.DataFrame(model.predict(df.text.values), columns=["My Model's Prediction"]) 
+            df = pd.concat([df, preds], axis=1).sort_values('sentiment', ascending=False)
+            
+            ten_most_recent = ten_most_recent.head(10).to_html(classes='most_recent')
+            top10 = df.head(10).to_html(classes='most_recent')
+            bottom10 = df.tail(10).sort_values('sentiment', ascending=False).to_html(classes='most_recent')
+           
+            return render_template('results.html', tables=[ten_most_recent,
+                                                           top10, bottom10],
+                                                   titles=['10 Most Recent',
+                                                           'Top 10',
+                                                           'Bottom 10'])
         except:
             return render_template('results.html', tables=['Please go back and try again'], 
                                    titles=['Something went wrong...'])
@@ -60,7 +78,9 @@ def get_user_info():
             
             # top 10 pos/neg
             #
-            df = df.sort_values('sentiment', ascending=False)
+            preds = pd.DataFrame(model.predict(df.text.values), columns=["My Model's Prediction"])
+            df = pd.concat([df, preds], axis=1).sort_values('sentiment', ascending=False)
+            
             top10 = df.head(10).to_html(classes='most_recent')
             bottom10 = df.tail(10).sort_values('sentiment', ascending=False)
             bottom10 = bottom10.to_html(classes='most_recent')
@@ -95,6 +115,6 @@ def about():
     
     
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=8105, threaded=True)
+    app.run('0.0.0.0', port=8000, debug=True)
     # app.debug = True
 
