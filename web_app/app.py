@@ -66,7 +66,7 @@ def get_user_info():
     elif option == 'Search by Hashtag':
         try:
             df = get_info(user_name, option=option).round(2)
-            # histogram
+
             fig, ax = plt.subplots()
             title = 'Tweets for #{} Total of {} Tweets'.format(
                 user_name, df.shape[0])
@@ -77,15 +77,13 @@ def get_user_info():
             plot_url = base64.b64encode(img.getvalue()).decode()
             source = 'data:image/png;base64,{}'.format(plot_url)
             
-            # top 10 pos/neg
-            #
             preds = pd.DataFrame(model.predict(df.text.values), columns=["My Model's Prediction"])
             df = pd.concat([df, preds], axis=1).sort_values('sentiment', ascending=False)
             
             top10 = df.head(10).to_html(classes='most_recent')
             bottom10 = df.tail(10).sort_values('sentiment', ascending=False)
             bottom10 = bottom10.to_html(classes='most_recent')
-            #, bottom10 , 'Bottom 10'
+
             return render_template('results.html', tables=[top10, bottom10],
                                    titles=['Top 10', 'Bottom 10'], plot=source,
                                    title=title)
@@ -109,7 +107,6 @@ def demo():
     
 @app.route('/about')
 def about():
-    # trending = ['test', 'test', 'test']
     trending='test'
     return render_template('about.html', hashtags=trending)
     

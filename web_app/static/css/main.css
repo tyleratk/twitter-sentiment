@@ -103,7 +103,6 @@ text-align: justify
 	p
 	{
 		line-height: 180%;
-		font-size:110%
 	}
 	
 	strong
@@ -588,6 +587,13 @@ text-align: justify
 	#page-p {
 		margin: auto;
 		width: 65%;
+		font-size:110%;
+	}
+	#page-p .big {
+		margin: auto;
+		width: 65%;
+		font-size:115%;
+		font-weight: bold;
 	}
 
 	#page
