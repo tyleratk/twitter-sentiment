@@ -99,6 +99,8 @@ If you have a happy or sad label for tweets, you can filter through them by cert
 
 You can get statistics about these tweets as well. In the above example, there were 374 postive tweets with an average sentiment of .54, and 161 negative tweets with an average sentiment of -.49. 
   
+  
+#### Another Example
 For another example, I filtered tweets containing words and hashtags that related to the two NFL teams playing in Super Bowl LII. I created two groups, one about the Patriots **(‘pats, brady, patriots’ etc.)** and one about the Eagles **(‘eagles’,‘Philadelphia’,‘nick foles’, etc.)**. Not surprisingly, most people from Massachusetts were tweeting about the Patriots and same for Pennsylvania and the Eagles.
 #### Number of tweets about the Patriots  
 ![](images/pats.png)  
