@@ -8,10 +8,10 @@ Using machine learning and natural-language-processing to determine whether some
 www.twittersentiment.com
 
 # Table of Contents
-  1. [Motivation for project](#motivation)
-  2. [Collecting and Cleaning Data](#collecting data)
-  3. [Modeling](#modeling)
-  4. [Why is sentiment important?](#Why is sentiment important)
+  1. [Motivation for project]
+  2. [Collecting and Cleaning Data]
+  3. [Modeling]
+  4. [Why is sentiment important?]
   
 ## Motivation
 **What is sentiment analysis?**  
