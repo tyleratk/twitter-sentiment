@@ -81,7 +81,7 @@ class MyListener(StreamListener):
                 client = pymongo.MongoClient()
                 db = client['tweet_data']
                 table = db['sb']
-                table.update(tweet_json,, {upsert:true})
+                table.update(tweet_json, {upsert:true})
 
 
     def on_error(self, status):
