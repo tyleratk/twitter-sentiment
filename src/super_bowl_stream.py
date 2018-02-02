@@ -44,6 +44,12 @@ class MyListener(StreamListener):
         # geo, lang, place, text, user
         if data.lang == 'en':
             tweet = data._json
+            try:
+                text = tweet['extended_tweet']['full_text']
+            except:
+                text = tweet['text']
+            if not any(t in topics for t in tweet[0].split()):
+                pass
             created_at = tweet['created_at']
             try:
                 coordinates = tweet['geo']['coordinates']
@@ -54,10 +60,6 @@ class MyListener(StreamListener):
             except:
                 tweet_location = ''
             try:
-                text = tweet['extended_tweet']['full_text']
-            except:
-                text = tweet['text']
-            try:
                 user_location = tweet['user']['location']
             except:
                 user_location = ''
@@ -67,28 +69,36 @@ class MyListener(StreamListener):
             tweet_data = [created_at, coordinates, tweet_location, text,
                           user_location, sentiment]
                           
-
             if csv:
                 with open('../data/super_bowl.csv', 'a') as f:
                     writer = csv.writer(f)
                     writer.writerow(tweet_data)
-            
-            
+            else:
+                names = ['text','created_at', 'coordinates','tweet_location',
+                         'user_location','sentiment']
+                tweet_json = dict(zip(names, tweet_data))
+                tweet_json['text'] = clean_tweets.clean_text(tweet_json['text'])
+                client = pymongo.MongoClient()
+                db = client['tweet_data']
+                table = db['sb']
+                table.update(tweet_json,, {upsert:true})
+
+
     def on_error(self, status):
         print(status)
         return True
 
 
-
 if __name__ == '__main__':
+    csv = False
+    topics = ['new england','patriots','pats','brady','super bowl', 
+              'philadelphia','eagles','superbowl', 'sb52','sblii','superbowl52',
+              'gronkowski','gronk']
+              
     twitter_stream = Stream(auth, MyListener())
-    twitter_stream.filter(track=['new england','patriots','pats','brady','super bowl'] ,locations=[-125,25,-65,48], async=True)
+    twitter_stream.filter(track=[] ,locations=[-125,25,-65,48], async=True)
 
     time.sleep(1800)
-    twitter_stream.filter(track=['philadelphia','eagles','super bowl'] ,locations=[-125,25,-65,48], async=True)
-    time.sleep(1800)
-
-
     twitter_stream.disconnect()
 
 
