@@ -48,8 +48,10 @@ class MyListener(StreamListener):
                 text = tweet['extended_tweet']['full_text']
             except:
                 text = tweet['text']
-            if not any(t in topics for t in tweet[0].split()):
+            if any(t in topics for t in text.split()):
                 pass
+            else:
+                return True
             created_at = tweet['created_at']
             try:
                 coordinates = tweet['geo']['coordinates']
@@ -66,7 +68,7 @@ class MyListener(StreamListener):
 
             sentiment = get_sentiment(text)
 
-            tweet_data = [created_at, coordinates, tweet_location, text,
+            tweet_data = [text, created_at, coordinates, tweet_location,
                           user_location, sentiment]
                           
             if csv:
@@ -77,11 +79,11 @@ class MyListener(StreamListener):
                 names = ['text','created_at', 'coordinates','tweet_location',
                          'user_location','sentiment']
                 tweet_json = dict(zip(names, tweet_data))
-                tweet_json['text'] = clean_tweets.clean_text(tweet_json['text'])
+                tweet_json['text'] = clean_text(tweet_json['text'])
                 client = pymongo.MongoClient()
                 db = client['tweet_data']
                 table = db['sb']
-                table.update(tweet_json, {upsert:true})
+                table.insert_one(tweet_json)
 
 
     def on_error(self, status):
@@ -96,9 +98,9 @@ if __name__ == '__main__':
               'gronkowski','gronk']
               
     twitter_stream = Stream(auth, MyListener())
-    twitter_stream.filter(track=[] ,locations=[-125,25,-65,48], async=True)
+    twitter_stream.filter(track=topics, locations=[-125,25,-65,48], async=True)
 
-    time.sleep(1800)
+    time.sleep(60)
     twitter_stream.disconnect()
 
 
