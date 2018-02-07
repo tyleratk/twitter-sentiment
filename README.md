@@ -89,6 +89,10 @@ https://public.tableau.com/shared/XJ5FFF4RR?:display_count=yes - Click to see in
 ![](images/counties.png) 
   
 ### Hashtag Analysis
+To show how one could use keywords and sentiment to analyze a topic, I decided to stream tweets during Super Bowl LII. I created two groups, one from filtering tweets that contain tweets about the Patriots and one about the Eagles. Below is a graph of average sentiment of the two groups as the game progressed.  
+![](images/plots/sb_1.png)  
+
+
 If you have a happy or sad label for tweets, you can filter through them by certain keywords or hashtags and look at what "happy" and "not happy" people are saying. For example, if we wanted to look at what people were saying about the college football championship game on January 8th, we could filter by the keywords **"football, Alabama, Georgia"** and generate the following word clouds.
  
 #### Can you guess which one is positive and which one is negative?  
