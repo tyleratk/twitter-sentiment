@@ -10,10 +10,10 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import re
 
 # ------------- set auth and initialize api -------------------------------
-consumer_key = os.environ.get('twitter_consumer_key')
-consumer_secret = os.environ.get('twitter_consumer_secret')
-access_token = os.environ.get('twitter_access_token')
-access_token_secret = os.environ.get('twitter_token_secret')
+consumer_key = 'dSJjdS3K25Ff3wl8uqZFKFgIZ'
+consumer_secret = '0z92aeUboBEXOFgmqSX1D6FYhfBv4LE5L14zz4OtcRYsIp5TbJ'
+access_token = '948768906344312832-eCKxtrwvuZBfa92mKJ1TJTLvkfOmLec'
+access_token_secret = 'ERVheG8crqQO0wQ4mmKhcVA5DLroFP80uoKFMTJKPgFZR'
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret) # authentication object
 auth.set_access_token(access_token, access_token_secret) # access token and secret
@@ -35,11 +35,11 @@ def get_sentiment(text):
     sid = SentimentIntensityAnalyzer()
     sent = sid.polarity_scores(text)['compound']
     return sent
-    
+
 
 # --------------- stream data ---------------------------------
 class MyListener(StreamListener):
-    
+
     def on_status(self, data):
         # geo, lang, place, text, user
         if data.lang == 'en':
@@ -70,7 +70,7 @@ class MyListener(StreamListener):
 
             tweet_data = [text, created_at, coordinates, tweet_location,
                           user_location, sentiment]
-                          
+
             if csv:
                 with open('../data/super_bowl.csv', 'a') as f:
                     writer = csv.writer(f)
@@ -82,10 +82,10 @@ class MyListener(StreamListener):
                 tweet_json['text'] = clean_text(tweet_json['text'])
                 client = pymongo.MongoClient()
                 db = client['tweet_data']
-                table = db['sb']
+                table = db['sb_day']
                 table.insert_one(tweet_json)
 
-
+            time.sleep(.1)
     def on_error(self, status):
         print(status)
         return True
@@ -96,12 +96,12 @@ if __name__ == '__main__':
     topics = ['new england','patriots','pats','brady','super bowl', 
               'philadelphia','eagles','superbowl', 'sb52','sblii','superbowl52',
               'gronkowski','gronk']
-              
+
     twitter_stream = Stream(auth, MyListener())
     twitter_stream.filter(track=topics, locations=[-125,25,-65,48], async=True)
 
-    time.sleep(60)
-    twitter_stream.disconnect()
+    #time.sleep(3600)
+    #twitter_stream.disconnect()
 
 
 
