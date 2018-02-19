@@ -119,7 +119,7 @@ Not surprisingly, most people from Massachusetts were tweeting about the Patriot
 #### Number of tweets about the Patriots  
 ![](images/pats.png)  
 #### Number of tweets about the Eagles  
-![](images/eagles.png)
+![](images/eagles.png)  
 
 
 
