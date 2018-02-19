@@ -86,20 +86,8 @@ You can adjust these margins depending on your use case, a hard (smaller) margin
 
 # Why is sentiment important?
 To answer this question I broke my analysis into two parts:
-- Sentiment and location
 - Sentiment of topics based off hashtags or keywords
-
-## Location analysis  
-To see if there was a relationship between someone’s location and the happiness of their tweet, I graphed the average sentiment of every county I had in my dataset. I did however find that there were counties with only one tweet, which obviously does not accurately represent that county.  
-![](images/counties.png)  
-https://public.tableau.com/shared/XJ5FFF4RR?:display_count=yes - Click to see interactive version  
-
-### Another Example
-For a better example, I filtered tweets containing words and hashtags that related to the two NFL teams playing in Super Bowl LII. I created two groups, one about the Patriots **(‘pats, brady, patriots’ etc.)** and one about the Eagles **(‘eagles’,‘Philadelphia’,‘nick foles’, etc.)**. Not surprisingly, most people from Massachusetts were tweeting about the Patriots and same for Pennsylvania and the Eagles.
-#### Number of tweets about the Patriots  
-![](images/pats.png)  
-#### Number of tweets about the Eagles  
-![](images/eagles.png)
+- Sentiment and location
 
 ## Hashtag Analysis  
 To show how one could use keywords and sentiment to analyze a topic, I decided to capture tweets while Super Bowl LII was being played. I created two groups from these tweets: one group contained tweets about the Patriots, the other contained tweets about the Eagles. Below is a graph of average sentiment of the two groups as the game progressed.  
@@ -117,6 +105,21 @@ Once you have a happy or sad label for tweets, you can filter through them by ce
 There are some interesting statistics about these tweets as well. In the above example, there were:
 - **374** postive tweets with an average sentiment of **.54**
 - **161** negative tweets with an average sentiment of **-.49**
+
+## Location analysis  
+To see if there was a relationship between someone’s location and the happiness of their tweet, I graphed the average sentiment of every county I had in my dataset. I did however find that there were counties with only one tweet, which obviously does not accurately represent that county.  
+![](images/counties.png)  
+https://public.tableau.com/shared/XJ5FFF4RR?:display_count=yes - Click to see interactive version  
+
+### Another Example
+For a better example, I filtered tweets containing words and hashtags that related to the two NFL teams playing in Super Bowl LII. I created two groups:
+- Group about the Patriots **(‘pats, brady, patriots’ etc.)**
+- Group about the Eagles **(‘eagles’,‘Philadelphia’,‘nick foles’, etc.)**
+Not surprisingly, most people from Massachusetts were tweeting about the Patriots and same for Pennsylvania and the Eagles.
+#### Number of tweets about the Patriots  
+![](images/pats.png)  
+#### Number of tweets about the Eagles  
+![](images/eagles.png)
 
 
 
