@@ -5,7 +5,8 @@
 ---
 Using machine learning and natural-language-processing to determine whether someone is happy or not, based off of their tweets.
 
-www.twittersentiment.com
+### Demo site  
+www.twittersentiment.info
 
 # Table of Contents
   1. [Motivation for project](#motivation)
