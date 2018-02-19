@@ -20,21 +20,18 @@ Sentiment analysis identifies if a piece of text is positive, neutral, or negati
 
 Positive Sentiment          |  Negative Sentiment
 :--------------------------:|:-------------------------:
-![](images/happy_tweet.png) |  ![](images/sad_tweet.png)
-
+![](images/happy_tweet.png) |  ![](images/sad_tweet.png)  
 
 
 ## Collecting Data
-I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets that were sent out from the United States. After receiving a tweet from the API, I parsed it to pull out only the data I wanted: the text, time, location, etc and saved it to a mongo database.
-
+I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets that were sent out from the United States. After receiving a tweet from the API, I parsed it to pull out only the data I wanted: the text, time, location, etc and saved it to a mongo database.  
 
 
 #### Cleaning Data
 In order to get my data ready for any type of exploratory analysis or modeling I used regex to:
 - Remove links
 - Remove user '@' handles
-- Remove hashtags
-
+- Remove hashtags  
 
 
 ## Modeling
@@ -84,10 +81,9 @@ For example, the tweet 'Happy birthday sweet pea ! 💛💛 I hope you have an a
 
 This step also prepares my data for modeling, since you cannot enter raw text into LinearSVC. LinearSVC works by plotting your data, and it tries to find a hyperplane that separates classes in this feature space. For my application, these classes consisted of tweets that were positive, neutral, or negative. An optimal separating hyperplane separates classes and maximized the margin between the classes. An example of this might look like this  
 ![](images/hyperplane.png)  
-You can adjust these margins depending on your use case, a hard (smaller) margin will be accurate and a soft (bigger) margin will be better at generalization. For my project I did not have to adjust this parameter.
+You can adjust these margins depending on your use case, a hard (smaller) margin will be accurate and a soft (bigger) margin will be better at generalization. For my project I did not have to adjust this parameter.  
 
 
-  
 ## Why is sentiment important?
 To answer this question I broke my analysis into two parts:
 - Sentiment and location
