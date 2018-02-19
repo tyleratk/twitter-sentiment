@@ -23,13 +23,18 @@ Positive Sentiment          |  Negative Sentiment
 ![](images/happy_tweet.png) |  ![](images/sad_tweet.png)
 
 
+
 ## Collecting Data
 I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets that were sent out from the United States. After receiving a tweet from the API, I parsed it to pull out only the data I wanted: the text, time, location, etc and saved it to a mongo database.
+
+
+
 #### Cleaning Data
 In order to get my data ready for any type of exploratory analysis or modeling I used regex to:
 - Remove links
 - Remove user '@' handles
 - Remove hashtags
+
 
 
 ## Modeling
@@ -81,6 +86,8 @@ This step also prepares my data for modeling, since you cannot enter raw text in
 ![](images/hyperplane.png)  
 You can adjust these margins depending on your use case, a hard (smaller) margin will be accurate and a soft (bigger) margin will be better at generalization. For my project I did not have to adjust this parameter.
 
+
+  
 ## Why is sentiment important?
 To answer this question I broke my analysis into two parts:
 - Sentiment and location
