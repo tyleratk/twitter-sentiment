@@ -72,7 +72,8 @@ class MyListener(StreamListener):
 
 
 if __name__ == '__main__':
-    save_csv=True
+    save_csv=False
+    
     twitter_stream = Stream(auth, MyListener())
     twitter_stream.filter(track='%23trumpshutdown', async=True)
 

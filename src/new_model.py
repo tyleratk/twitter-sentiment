@@ -143,10 +143,12 @@ class TwitterClassifier():
             gb = df.groupby('sentiment_type')
             # gets the size of the smallest class
             n = min([gb.get_group(g).shape[0] for g in['pos', 'neu', 'neg']])
+            print(n)
             pos = gb.get_group('pos').sample(n)
             neu = gb.get_group('neu').sample(n)
             neg = gb.get_group('neg').sample(n)
             comb = pd.concat([pos, neu, neg])
+            print(comb.shape[0])
             X = comb.text.values
             y = comb.sentiment_type.values
 
@@ -192,9 +194,9 @@ class TwitterClassifier():
             df.loc[mask, 'sentiment_type'] = 'neu'
             df.loc[df.sentiment <  -0.1,'sentiment_type'] = 'neg'
             tweets, labels = self.get_balanced_classes(df)
-            with open('../data/nltk_pkl.pkl', 'wb') as outfile:
-                pickle.dump([tweets, labels], outfile)
-                print('Wrote nltk_pkl')
+            # with open('../data/nltk_pkl.pkl', 'wb') as outfile:
+            #     pickle.dump([tweets, labels], outfile)
+            #     print('Wrote nltk_pkl')
 
             
         if source == 'mongo_pkl':
@@ -248,11 +250,11 @@ class TwitterClassifier():
 
 if __name__ == '__main__':
     model = TwitterClassifier('linear_svc')
-    model.train('nltk_pkl')
+    model.train('nltk')
     
-    with open('../models/model.pkl', 'wb') as outfile:
-        pickle.dump(model, outfile)
-    print('Wrote model to pkl')
+    # with open('../models/model.pkl', 'wb') as outfile:
+    #     pickle.dump(model, outfile)
+    # print('Wrote model to pkl')
     
  
 

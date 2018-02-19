@@ -36,7 +36,6 @@ api = tweepy.API(auth) # API object while passing in auth information
 class MyListener(StreamListener):
     
     def on_status(self, data):
-        # geo, lang, place, text, user
         if data.lang == 'en':
             tweet = data._json
             created_at = tweet['created_at']
