@@ -16,14 +16,14 @@ punctuations = string.punctuation
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.pipeline import Pipeline
-from sklearn.feature_extraction.stop_words import ENGLISH_STOP_WORDS as stopwords 
+from sklearn.feature_extraction.stop_words import ENGLISH_STOP_WORDS as stopwords
 from sklearn.pipeline import make_pipeline
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import pickle
 import seaborn as sns
 import spacy
 from sklearn.feature_extraction.stop_words import ENGLISH_STOP_WORDS
-from string import punctuation
+# from string import punctuation
 from sklearn.ensemble import RandomForestRegressor
 
 from nltk.tokenize import word_tokenize
@@ -36,12 +36,30 @@ PUNCT_DICT = {ord(punc): None for punc in punctuation if punc not in ['_', '*']}
 
 
 class TwitterClassifier():
+    '''
+    Class to create a model that will predict pos, nue, or neg sentiment
+
+    Attributes:
+    classifier - type of model
+    pipeline - pipeline consisting of a vectorizer and a model
+    source - where to load training tweets from
+    '''
+
     def __init__(self, classifier):
         self.classifier = classifier
         self.pipeline = self.get_pipeline(classifier)
-        
-        
+
+
     def get_pipeline(self, classifier):
+        '''
+        Create pipeline
+
+        Input:
+        classifier - model to use
+
+        Returns:
+        fitted pipeline of a vectorizer and model
+        '''
         print('Creating model...')
         if classifier == 'linear_svc':
             vectorizer = CountVectorizer()
@@ -57,18 +75,25 @@ class TwitterClassifier():
             model = RandomForestRegressor()
         pipeline = Pipeline([('vec', vectorizer), ('model', model)])
 
-        # return make_pipeline(vectorizer, model)
         return pipeline
-        
+
+
     def prep(self, tweet):
+        '''
+        Tokenize and prep tweet
+
+        Input:
+        text of tweet
+
+        Returns:
+        string of tokens
+        '''
         doc = nlp(tweet)
-        # print('In prep')
-        # doc = [word for word in doc if len(word) >= 4]
         pos_lst = ['ADJ', 'ADV', 'NOUN', 'PROPN', 'VERB']
         tokens = [token.lemma_.lower().replace(' ', '_') for token in doc if token.pos_ in pos_lst]
         return(' '.join(token for token in tokens if token not in STOPLIST).replace("'s", '').translate(PUNCT_DICT))
-    
-    
+
+
     def clean_text(self, tweet):
         '''
         remove links, usernames, and newlines from tweet
@@ -77,11 +102,19 @@ class TwitterClassifier():
         (\w+:\/\/\S+)        => removes links
         '''
         return re.sub('(@\w+)|(#\w+)|(\w+:\/\/\S+)|(\n+)', '', tweet)
-        
-        
+
+
     def get_sentiment(self, row):
         '''
         returns sentiment based off of emoji
+
+        Input:
+        text of tweet
+
+        Returns:
+        -1 if text contains a neg emoji
+        0 if text cotains no emoji
+        1 if text contains pos emoji
         '''
         happy = [b'\xf0\x9f\x98\x81', b'\xf0\x9f\x98\x8d', b'\xf0\x9f\x98\x82',
                  b'\xf0\x9f\x98\x8a', b'\xf0\x9f\x98\x98', b'\xf0\x9f\x98\x89',
@@ -90,7 +123,7 @@ class TwitterClassifier():
                  b'\xf0\x9f\x98\x9d', b'\xf0\x9f\x98\x9b', b'\xf0\x9f\x95\xba',
                  b'\xf0\x9f\x92\x83', b'\xf0\x9f\x8e\x8a', b'\xf0\x9f\x8e\x89',
                  b'\xf0\x9f\x92\x96']
-        
+
         sad = [b'\xf0\x9f\x98\x9e', b'\xf0\x9f\x98\x94', b'\xf0\x9f\x98\x9f',
                b'\xf0\x9f\x98\x95', b'\xf0\x9f\x99\x81', b'\xf0\x9f\x98\xa3',
                b'\xf0\x9f\x98\x96', b'\xf0\x9f\x98\xab', b'\xf0\x9f\x98\xa9',
@@ -101,7 +134,7 @@ class TwitterClassifier():
                b'\xf0\x9f\xa4\x92', b'\xf0\x9f\x91\x8e', b'\xf0\x9f\x92\x94']
         tweet = row.text.split()
         try:
-            # use np.random incase there are multiple emojis
+            # use np.random in case there are multiple emojis
             emoji = np.random.choice([word.encode('utf-8') for word in tweet if word.encode('utf-8') in happy + sad])
         except:
             return 0
@@ -109,11 +142,17 @@ class TwitterClassifier():
             return 1
         elif emoji in sad:
             return -1
-        
-        
+
+
     def remove_emoji(self, tweet):
         '''
-        remove emojies from tweets
+        remove emojis from tweets
+
+        Input:
+        text of tweet
+
+        Returns:
+        text without emojis
         '''
         emoji_pattern = re.compile("["
             u"\U0001F600-\U0001F64F"  # emoticons
@@ -122,11 +161,17 @@ class TwitterClassifier():
             u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
                                "]+", flags=re.UNICODE)
         return emoji_pattern.sub(r'', tweet) # no emoji
-            
-            
+
+
     def get_balanced_classes(self, df):
         '''
         balance out classes before training a model
+
+        Input:
+        DataFrame of tweets
+
+        Returns:
+        DataFrame with balanced sentiment classes
         '''
         if self.source == 'mongo':
             gb = df.groupby('sentiment')
@@ -153,11 +198,17 @@ class TwitterClassifier():
             y = comb.sentiment_type.values
 
         return X, y
-            
-            
+
+
     def load_data(self, source):
         '''
         load data from mongo, clean tweets, and get sentiment
+
+        Input:
+        source to load from
+
+        Returns:
+        text of tweets, sentiment label
         '''
         if source == 'mongo':
             print('Loading data...')
@@ -175,7 +226,7 @@ class TwitterClassifier():
             # with open('../data/mongo_pkl.pkl', 'wb') as outfile:
             #     pickle.dump([tweets, labels], outfile)
             #     print('Wrote mongo_pkl')
-            
+
         if source == 'nltk':
             print('Loading data...')
             client = pymongo.MongoClient()
@@ -187,7 +238,7 @@ class TwitterClassifier():
             print('Getting sentiment...')
             # df['text'] = df['text'].apply(self.remove_emoji)
             sid = SentimentIntensityAnalyzer()
-            df['sentiment'] = df.text.apply(lambda x: sid.polarity_scores(x)['compound'])   
+            df['sentiment'] = df.text.apply(lambda x: sid.polarity_scores(x)['compound'])
             df = df[['text', 'sentiment']]
             df.loc[df.sentiment >  0.1,'sentiment_type'] = 'pos'
             mask = (df.sentiment >= -0.1) & (df.sentiment <= 0.1)
@@ -198,7 +249,7 @@ class TwitterClassifier():
             #     pickle.dump([tweets, labels], outfile)
             #     print('Wrote nltk_pkl')
 
-            
+
         if source == 'mongo_pkl':
             with open('../data/mongo_pkl.pkl', 'rb') as infile:
                 tweets, labels = pickle.load(infile)
@@ -207,60 +258,58 @@ class TwitterClassifier():
         if source == 'nltk_pkl':
             with open('../data/nltk_pkl.pkl', 'rb') as infile:
                 tweets, labels = pickle.load(infile)
-                
+
         return tweets, labels
 
-        
+
     def train(self, source):
         '''
         get clean data and fit pipeline
+
+        Input:
+        source to load from
+
+        Output:
+        None
         '''
         self.source = source
-        tweets, labels = self.load_data(source)       
+        tweets, labels = self.load_data(source)
         # param_grid = {'model__C': [1.0, .8, .6]}#,
-        # 
+        #
         #               #'model__max_iter': [1000, 1200]}
-        # 
+        #
         # grid_search = GridSearchCV(self.pipeline, param_grid,
         #                            scoring='neg_log_loss')
-        # # 
+        # #
         # grid_search.fit(tweets, labels)
         # self.estimator = grid_search.best_estimator_
         # self.estimator.fit(tweets, labels)
-        
-        # X_train, X_test, y_train, y_test = train_test_split(tweets, labels, 
+
+        # X_train, X_test, y_train, y_test = train_test_split(tweets, labels,
         #                                                     stratify=labels)
         # self.pipeline.fit(X_train, y_train)
         # print('Score: {:.2f}'.format(self.pipeline.score(X_test, y_test)))
-        
+
         self.pipeline.fit(tweets, labels)
-        
-        
+
+
     def predict(self, tweet):
         '''
         return sentiment of tweet
+
+        Input:
+        text of tweet
+
+        Output:
+        sentiment label
         '''
         return self.pipeline.predict(tweet)
-        # self.estimator.predict(tweet)
     
-
-
-
-
 
 if __name__ == '__main__':
     model = TwitterClassifier('linear_svc')
     model.train('nltk')
-    
+
     # with open('../models/model.pkl', 'wb') as outfile:
     #     pickle.dump(model, outfile)
     # print('Wrote model to pkl')
-    
- 
-
-    
-    
-    
-
-
-
