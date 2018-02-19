@@ -103,8 +103,8 @@ Once you have a happy or sad label for tweets, you can filter through them by ce
 ![](images/neg_cloud.png)
 
 There are some interesting statistics about these tweets as well. In the above example, there were:
-- **374** postive tweets with an average sentiment of **.54**
-- **161** negative tweets with an average sentiment of **-.49**
+- **374 postive** tweets with an average **sentiment of .54**
+- **161 negative** tweets with an average **sentiment of -.49**
 
 ## Location analysis  
 To see if there was a relationship between someone’s location and the happiness of their tweet, I graphed the average sentiment of every county I had in my dataset. I did however find that there were counties with only one tweet, which obviously does not accurately represent that county.  
@@ -112,9 +112,9 @@ To see if there was a relationship between someone’s location and the happines
 https://public.tableau.com/shared/XJ5FFF4RR?:display_count=yes - Click to see interactive version  
 
 ### Another Example
-For a better example, I filtered tweets containing words and hashtags that related to the two NFL teams playing in Super Bowl LII. I created two groups:
+For a better location example, I filtered tweets containing words and hashtags that related to the two NFL teams playing in Super Bowl LII. I created two groups:
 - Group about the Patriots **(‘pats, brady, patriots’ etc.)**
-- Group about the Eagles **(‘eagles’,‘Philadelphia’,‘nick foles’, etc.)**
+- Group about the Eagles **(‘eagles’,‘Philadelphia’,‘nick foles’, etc.)**  
 Not surprisingly, most people from Massachusetts were tweeting about the Patriots and same for Pennsylvania and the Eagles.
 #### Number of tweets about the Patriots  
 ![](images/pats.png)  
