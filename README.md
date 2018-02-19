@@ -13,7 +13,7 @@ www.twittersentiment.com
   3. [Modeling](#modeling)
   4. [Why is sentiment important?](#why-is-sentiment-important)
 
-## Motivation
+# Motivation
 **What is sentiment analysis?**  
 Sentiment analysis identifies if a piece of text is positive, neutral, or negative depending on the type of wording they use, any emoji's etc. An example of positive and negative tweets would look like:
 
@@ -23,7 +23,7 @@ Positive Sentiment          |  Negative Sentiment
 ![](images/happy_tweet.png) |  ![](images/sad_tweet.png)  
 
 
-## Collecting Data
+# Collecting Data
 I collected my data using twitter's streaming API. Over the course of about a week I collected a total of 800k tweets that were sent out from the United States. After receiving a tweet from the API, I parsed it to pull out only the data I wanted: the text, time, location, etc and saved it to a mongo database.  
 
 
@@ -34,7 +34,7 @@ In order to get my data ready for any type of exploratory analysis or modeling I
 - Remove hashtags  
 
 
-## Modeling
+# Modeling
 #### Getting Sentiment
 The majority of sentiment analysis approaches take one of two forms: polarity-based, where pieces of texts are classified as either positive or negative, or valence-based, where the intensity of the sentiment is taken into account. The method I used to classify tweets as happy, neutral, or sad uses both approaches.  
 
@@ -84,12 +84,12 @@ This step also prepares my data for modeling, since you cannot enter raw text in
 You can adjust these margins depending on your use case, a hard (smaller) margin will be accurate and a soft (bigger) margin will be better at generalization. For my project I did not have to adjust this parameter.  
 
 
-## Why is sentiment important?
+# Why is sentiment important?
 To answer this question I broke my analysis into two parts:
 - Sentiment and location
 - Sentiment of topics based off hashtags or keywords
 
-### Location analysis  
+## Location analysis  
 To see if there was a relationship between someone’s location and the happiness of their tweet, I graphed the average sentiment of every county I had in my dataset. I did however find that there were counties with only one tweet, which obviously does not accurately represent that county.  
 ![](images/counties.png)  
 https://public.tableau.com/shared/XJ5FFF4RR?:display_count=yes - Click to see interactive version  
@@ -101,7 +101,7 @@ For a better example, I filtered tweets containing words and hashtags that relat
 #### Number of tweets about the Eagles  
 ![](images/eagles.png)
 
-### Hashtag Analysis  
+## Hashtag Analysis  
 To show how one could use keywords and sentiment to analyze a topic, I decided to capture tweets while Super Bowl LII was being played. I created two groups from these tweets: one group contained tweets about the Patriots, the other contained tweets about the Eagles. Below is a graph of average sentiment of the two groups as the game progressed.  
 ![](images/plots/sb_1.png)  
 
