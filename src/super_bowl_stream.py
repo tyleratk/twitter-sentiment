@@ -10,10 +10,10 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import re
 
 # ------------- set auth and initialize api -------------------------------
-consumer_key = 'dSJjdS3K25Ff3wl8uqZFKFgIZ'
-consumer_secret = '0z92aeUboBEXOFgmqSX1D6FYhfBv4LE5L14zz4OtcRYsIp5TbJ'
-access_token = '948768906344312832-eCKxtrwvuZBfa92mKJ1TJTLvkfOmLec'
-access_token_secret = 'ERVheG8crqQO0wQ4mmKhcVA5DLroFP80uoKFMTJKPgFZR'
+consumer_key = os.environ.get('twitter_consumer_key')
+consumer_secret = os.environ.get('twitter_consumer_secret')
+access_token = os.environ.get('twitter_access_token')
+access_token_secret = os.environ.get('twitter_token_secret')
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret) # authentication object
 auth.set_access_token(access_token, access_token_secret) # access token and secret
@@ -93,7 +93,7 @@ class MyListener(StreamListener):
 
 if __name__ == '__main__':
     csv = False
-    topics = ['new england','patriots','pats','brady','super bowl', 
+    topics = ['new england','patriots','pats','brady','super bowl',
               'philadelphia','eagles','superbowl', 'sb52','sblii','superbowl52',
               'gronkowski','gronk']
 
@@ -102,7 +102,3 @@ if __name__ == '__main__':
 
     #time.sleep(3600)
     #twitter_stream.disconnect()
-
-
-
-

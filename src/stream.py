@@ -1,7 +1,7 @@
 #################################################################
 #     v1.03: adds adding it to mongodb
 #            --------------
-#     v1.02: corrects hashtags      
+#     v1.02: corrects hashtags
 #            --------------
 #     v1.01: update try/except for some attributes
 #            adds extended_tweet
@@ -22,10 +22,10 @@ import clean_tweets
 
 
 # ------------- set auth and initialize api -------------------------------
-consumer_key = 'vv9NhyyyMTePWDBbNAkk7xly9'
-consumer_secret = 'jRt3H4kIl2PAZQyV1m9PpcW96z1ncIVp68r2Dd1p94SyeWrm2t'
-access_token = '948768906344312832-8DJ8eIZn01oNPIGgYBSEUeTu9azUGi0'
-access_token_secret = 'uJ90fHHgYiyiWWDVwLkEbxQTnxzAXTmoHoJd8uHNA3tf9'
+consumer_key = os.environ.get('twitter_consumer_key')
+consumer_secret = os.environ.get('twitter_consumer_secret')
+access_token = os.environ.get('twitter_access_token')
+access_token_secret = os.environ.get('twitter_token_secret')
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret) # authentication object
 auth.set_access_token(access_token, access_token_secret) # access token and secret
@@ -34,7 +34,7 @@ api = tweepy.API(auth) # API object while passing in auth information
 
 # --------------- stream data ---------------------------------
 class MyListener(StreamListener):
-    
+
     def on_status(self, data):
         if data.lang == 'en':
             tweet = data._json
@@ -82,10 +82,10 @@ class MyListener(StreamListener):
 
             tweet_data = [created_at, hash_tags, coordinates,
                           coordinates_type, lang, country, tweet_location, text,
-                          user_created, default_profile_image, user_likes, 
-                          user_followers, user_following, user_screen_name, 
+                          user_created, default_profile_image, user_likes,
+                          user_followers, user_following, user_screen_name,
                           user_num_tweets, user_location]
-                          
+
             if csv:
                 with open('../data/tweets.csv', 'a') as f:
                     writer = csv.writer(f)
@@ -103,8 +103,8 @@ class MyListener(StreamListener):
                 table = db['tweets']
                 table.insert_one(tweet_json)
 
-            
-            
+
+
     def on_error(self, status):
         print(status)
         return True
@@ -119,7 +119,3 @@ if __name__ == '__main__':
 
     time.sleep(2)
     twitter_stream.disconnect()
-
-
-
-

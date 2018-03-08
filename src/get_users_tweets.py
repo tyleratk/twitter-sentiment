@@ -15,10 +15,10 @@ import time
 import networkx as nx
 
 # ------------- set auth and initialize api -------------------------------
-consumer_key = 'dSJjdS3K25Ff3wl8uqZFKFgIZ'
-consumer_secret = '0z92aeUboBEXOFgmqSX1D6FYhfBv4LE5L14zz4OtcRYsIp5TbJ'
-access_token = '948768906344312832-eCKxtrwvuZBfa92mKJ1TJTLvkfOmLec'
-access_token_secret = 'ERVheG8crqQO0wQ4mmKhcVA5DLroFP80uoKFMTJKPgFZR'
+consumer_key = os.environ.get('twitter_consumer_key')
+consumer_secret = os.environ.get('twitter_consumer_secret')
+access_token = os.environ.get('twitter_access_token')
+access_token_secret = os.environ.get('twitter_token_secret')
 
 
 # Creating the authentication object
@@ -34,4 +34,3 @@ tweetCount = 20
 results = api.user_timeline(id=name, count=tweetCount)
 for tweet in results:
     tweet = tweet._json
-    
