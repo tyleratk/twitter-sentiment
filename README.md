@@ -121,10 +121,13 @@ Not surprisingly, most people from Massachusetts were tweeting about the Patriot
 #### Number of tweets about the Patriots  
 ![](images/pats.png)  
 #### Number of tweets about the Eagles  
-![](images/eagles.png)  
+![](images/eagles.png)
+
+
+   
 
 # Tech Stack
-![](images/tech_stack.png) 
+![](images/tech_stack.png)
 
 ## References
   **Hutto, C.J. & Gilbert, E.E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. Eighth International Conference on Weblogs and Social Media (ICWSM-14). Ann Arbor, MI, June 2014.**
