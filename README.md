@@ -13,6 +13,7 @@ www.twittersentiment.info
   2. [Collecting and Cleaning Data](#collecting-data)
   3. [Modeling](#modeling)
   4. [Why is sentiment important?](#why-is-sentiment-important)
+  5. [Tech Stack](#tech-stack)
 
 # Motivation
 **What is sentiment analysis?**  
@@ -122,7 +123,8 @@ Not surprisingly, most people from Massachusetts were tweeting about the Patriot
 #### Number of tweets about the Eagles  
 ![](images/eagles.png)  
 
-
+# Tech Stack
+![](images/tech_stack.png) 
 
 ## References
   **Hutto, C.J. & Gilbert, E.E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. Eighth International Conference on Weblogs and Social Media (ICWSM-14). Ann Arbor, MI, June 2014.**
